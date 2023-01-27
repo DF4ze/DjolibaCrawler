@@ -38,6 +38,7 @@ build/
 
 # Log file
 *.log
+*.log*
 
 # BlueJ files
 *.ctxt
@@ -52,4 +53,5 @@ build/
 *.ear
 *.zip
 *.tar.gz
+*.gz
 *.rar
