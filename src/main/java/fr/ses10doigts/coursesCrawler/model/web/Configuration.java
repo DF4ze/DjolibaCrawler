@@ -12,6 +12,9 @@ public class Configuration {
     private boolean	launchCrawl;
     private boolean	launchRefacto;
 
+    private String	startGenDate;
+    private String	endGenDate;
+
     public String getTxtSeeds() {
 	return txtSeeds;
     }
@@ -66,6 +69,22 @@ public class Configuration {
 
     public void setLaunchRefacto(boolean launchRefacto) {
 	this.launchRefacto = launchRefacto;
+    }
+
+    public String getStartGenDate() {
+	return startGenDate;
+    }
+
+    public void setStartGenDate(String startGenDate) {
+	this.startGenDate = startGenDate;
+    }
+
+    public String getEndGenDate() {
+	return endGenDate;
+    }
+
+    public void setEndGenDate(String endGenDate) {
+	this.endGenDate = endGenDate;
     }
 
     @Override

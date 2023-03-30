@@ -10,12 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import fr.ses10doigts.coursesCrawler.CustomProperties;
-import fr.ses10doigts.coursesCrawler.model.crawl.CrawlReport;
+import fr.ses10doigts.coursesCrawler.model.crawl.Report;
 import fr.ses10doigts.coursesCrawler.model.crawl.enumerate.FinalState;
 import fr.ses10doigts.coursesCrawler.model.crawl.enumerate.RunningState;
 import fr.ses10doigts.coursesCrawler.repository.web.WebCrawlingProxy;
+import fr.ses10doigts.coursesCrawler.service.course.tool.Chrono;
+import fr.ses10doigts.coursesCrawler.service.crawl.tool.CrawlReport;
 import fr.ses10doigts.coursesCrawler.service.crawl.tool.LineReader;
-import fr.ses10doigts.coursesCrawler.service.crawl.tool.Report;
 
 @Service
 public class CrawlService {
@@ -41,7 +42,7 @@ public class CrawlService {
 
 
 
-    public CrawlReport launchCrawl() throws IOException {
+    public Report launchCrawl() throws IOException {
 	if (treatment == null || treatment.getState().equals(State.TERMINATED)) {
 	    // Retrieve seeds
 	    reader.setFilePath(props.getSeedsFile());
@@ -75,9 +76,9 @@ public class CrawlService {
 	return getReportCurrentCrawl();
     }
 
-    public CrawlReport getReportCurrentCrawl() {
-	Report report = pc.getReport();
-	CrawlReport cr = new CrawlReport();
+    public Report getReportCurrentCrawl() {
+	CrawlReport crawlReport = pc.getReport();
+	Report report = new Report();
 
 	if (treatment != null) {
 	    State state = treatment.getState();
@@ -85,35 +86,34 @@ public class CrawlService {
 	    if (state.equals(State.TERMINATED)) {
 		// has it (not) been stop by user ?
 		if (pc.getRunning()) {
-		    cr.setFinalState(FinalState.SUCCESS);
+		    report.setFinalState(FinalState.SUCCESS);
 		} else {
-		    cr.setFinalState(FinalState.WARNING);
+		    report.setFinalState(FinalState.WARNING);
 		}
-		cr.setRunningState(RunningState.ENDED);
+		report.setRunningState(RunningState.ENDED);
 	    } else {
-		cr.setRunningState(RunningState.PROCESSING);
+		report.setRunningState(RunningState.PROCESSING);
 	    }
 	} else {
-	    cr.setRunningState(RunningState.PENDING);
-	    cr.setFinalState(FinalState.SUCCESS);
+	    report.setRunningState(RunningState.PENDING);
+	    report.setFinalState(FinalState.SUCCESS);
 	}
 
 	// @formatter:off
-	String message = "Crawl status : "+cr.getRunningState()+"\n"+
-		"- Total page : "+report.size()+"\n"+
-		"- Page pending : "+report.getPendingCrawled()+"\n"+
-		"- Page ended :   "+report.getSuccessCrawled()+"\n"+
-		"- Page error :   "+report.getErrorCrawled()+"\n";
+	String message = "Crawl status : "+report.getRunningState()+"\n"+
+		"- Total page : "+crawlReport.size()+"\n"+
+		"- Page pending : "+crawlReport.getPendingCrawled()+"\n"+
+		"- Page ended :   "+crawlReport.getSuccessCrawled()+"\n"+
+		"- Page error :   "+crawlReport.getErrorCrawled()+"\n"+
+		"- Time :   " + Chrono.longMillisToHour( crawlReport.getTime() )+ "\n";
 	//@formatter:on
-	if(pc.getChrono() != null) {
-	    message += "- Time :   "+pc.getChrono().compareToHour()+"\n";
-	}
 
-	cr.setMessage(message);
-	return cr;
+
+	report.setMessage(message);
+	return report;
     }
 
-    public CrawlReport stopCurrentCrawl() {
+    public Report stopCurrentCrawl() {
 	pc.askToStop();
 
 	return getReportCurrentCrawl();

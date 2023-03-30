@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.ses10doigts.coursesCrawler.model.crawl.CrawlReport;
+import fr.ses10doigts.coursesCrawler.model.crawl.Report;
 import fr.ses10doigts.coursesCrawler.model.crawl.Page;
 import fr.ses10doigts.coursesCrawler.service.course.RefactorerService;
 import fr.ses10doigts.coursesCrawler.service.crawl.CrawlService;
@@ -42,7 +42,7 @@ public class ApiController {
     }
 
     @GetMapping("/report")
-    public CrawlReport reportCrawl() {
+    public Report reportCrawl() {
 
 	return crawlService.getReportCurrentCrawl();
 

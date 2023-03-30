@@ -1,5 +1,11 @@
 package fr.ses10doigts.coursesCrawler.service.course;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import fr.ses10doigts.coursesCrawler.model.course.AbstractEntity;
 import fr.ses10doigts.coursesCrawler.model.course.EntitiesList;
 import fr.ses10doigts.coursesCrawler.model.course.entity.Arrivee;
 import fr.ses10doigts.coursesCrawler.model.course.entity.Cote;
@@ -83,17 +90,27 @@ public class GenyParser implements HtmlParser{
 
     @Override
     public Long parse_numCourse(){
+	Long longCourse = null;
 	// extraction de l'ID de la course
 	Pattern p = Pattern.compile(".*_c([0-9]+)$");
 	Matcher m = p.matcher(url);
-	boolean b = m.matches();
-	Long longCourse = null;
-	if( b ){
+
+
+	boolean isMatching = true;
+	if (!m.matches()) {
+	    p = Pattern.compile(".*course=([0-9]+).*");
+	    m = p.matcher(url);
+	    if (!m.matches()) {
+		isMatching = false;
+	    }
+	}
+
+	if (isMatching) {
 	    String numCourse = m.group(1);
 	    try{
 		longCourse = Long.parseLong(numCourse);
 	    }catch(Exception e){
-		logger.debug(e.getMessage());
+		logger.debug("Unable to parse num course : " + e.getMessage());
 
 	    }
 	}
@@ -103,6 +120,9 @@ public class GenyParser implements HtmlParser{
 
     @Override
     public EntitiesList parse_course(){
+	logger.debug("=================================== Course infos");
+	logger.debug(url);
+
 	Long longCourse = parse_numCourse();
 
 	// extraction de l'ID de la date
@@ -112,6 +132,24 @@ public class GenyParser implements HtmlParser{
 	String date = null;
 	if( b ){
 	    date = m.group(1);
+	} else {
+	    Elements elements = xPathTool.getElements(doc, "/div[@class='yui-u']/div/span");
+	    if (elements != null && elements.size() > 0) {
+		String txt = elements.get(0).text();
+		p = Pattern.compile(".*([0-9]{2}/[0-9]{2}/[0-9]{2}).*");
+		m = p.matcher(txt);
+		if (m.matches()) {
+		    date= m.group(1);
+		    SimpleDateFormat sdf2DYear = new SimpleDateFormat("dd/MM/yy");
+		    SimpleDateFormat sdf4DYear = new SimpleDateFormat("yyyy/MM/dd");
+		    try {
+			Date parse = sdf2DYear.parse(date);
+			date = sdf4DYear.format(parse);
+		    } catch (ParseException e) {
+			logger.error("Error parsing date : " + date);
+		    }
+		}
+	    }
 	}
 	logger.debug("Date : " + date);
 
@@ -232,7 +270,8 @@ public class GenyParser implements HtmlParser{
 	Course course = null;
 	if( longCourse 		!= null &&
 		numCourse 	!= null &&
-		date 		!= null &&
+		date != null
+		&&
 		hippodrome 	!= null &&
 		prix 		!= null &&
 		intReunion 	!= null &&
@@ -269,106 +308,266 @@ public class GenyParser implements HtmlParser{
 	    logger.debug("=================================== Rapports");
 	    logger.debug(url);
 
-	    Elements nbTableaux = xPathTool.getElements(doc, "/table[@id='lesSolos']/tbody table");
-	    boolean oldStyle = false;
-	    if( nbTableaux != null && nbTableaux.size() == 3) {
-		oldStyle = true;
-	    }
+	    listeRapports = new EntitiesList();
 
-	    // ancien tableau
-	    Elements lignes = null;
-	    if( oldStyle ){
-		lignes = xPathTool.getElements(doc, "/table[@id='lesSolos']/tbody/tr[0]/td[1]/table/tbody/tr");
+	    // Recherche tableau
+	    Elements tables = xPathTool.getElements(doc, "/table[@id='lesSolos']/tbody");
 
-		if( lignes == null || lignes.size() == 0 ) {
-		    lignes = xPathTool.getElements(doc, "/table[@id='lesSolos']/tbody/tr[0]/td[2]/table/tbody/tr");
+	    String isRigthTable = "";
+
+	    table: for (int iTable = 1; iTable < tables.size(); iTable++) {
+		// si c'est encore du Geny... faut passer encore au tableau suivant
+		if (isRigthTable.equals("geny")) {
+		    isRigthTable = "";
+		    continue;
 		}
-	    }else{
-		// nouveau tableau
-		lignes = xPathTool.getElements(doc, "/table[@id='lesSolos']/tbody/tr[0]/td[3]/table/tbody/tr");
-
-	    }
-
-	    if( lignes!=null && lignes.size() > 0 ){
+		Element table = tables.get(iTable);
+		Elements lignes = table.select("tr");
+		if (lignes == null || lignes.size() == 0) {
+		    continue;
+		}
 
 		Rapport rapport = new Rapport();
-		listeRapports = new EntitiesList();
-
-		for( int i=1; i< lignes.size(); i++ ){
-		    Element uneLigne = lignes.get(i);
+		line: for (int iLigne = 0; iLigne < lignes.size(); iLigne++) {
+		    Element uneLigne = lignes.get(iLigne);
 		    Elements cellules = uneLigne.select("td");
+		    if (cellules == null || cellules.size() == 0) {
+			continue;
+		    }
 
 		    Integer numCheval = null;
 		    Double gain = null;
 		    try{
-			if( cellules!=null && cellules.size() > 0 ){
-			    for( int j=0; j < (oldStyle? cellules.size()/*-1*/ : cellules.size()); j++ ){
-				Element uneCellule = cellules.get(j);
+			boolean firstLine = false;
+			for (int jCellule = 0; jCellule < cellules.size(); jCellule++) {
 
-				if( j == 0 ){
-
-				    String txt = uneCellule.text().trim();
-				    txt = txt.replaceAll("[^\\d\\.\\,\\-]", "");
-				    numCheval = Integer.parseInt( txt );
-
-				}else if( j == 1 ){
-				    String txt = uneCellule.text().trim();
-				    txt = txt.replace(",", ".");
-				    txt = txt.replace("<b>", "");
-				    txt = txt.replace("</b>", "");
-				    txt = txt.replace(" ", "");
-				    txt = txt.replace("€", "");
-				    txt = txt.replaceAll("[^\\d\\.\\,\\-]", "");
+			    Element uneCellule = cellules.get(jCellule);
+			    // C'est la 1ere cell du tab qui indique s'il s'agit du bon tab
+			    Elements discrimGeny = uneCellule.getElementsByAttributeValueMatching("alt", "solo");
+			    Elements discrimPmu = uneCellule.getElementsByAttributeValueMatching("alt", "eSimple");
 
 
-				    gain = Double.parseDouble(txt);
-				}
-			    }// for cellules
+			    if (discrimGeny.size() > 0) {
+				isRigthTable = "geny";
+				firstLine = true;
+				// on dédie le traitement Spécial! des Geny à une fonction et on passe au
+				// tableau suivant
+				listeRapports.addAll(parseGenyRapport(tables, longCourse));
+				continue table;
 
-			    if( i == 1 ){
-				rapport = new Rapport();
-				rapport.setNumCheval(numCheval);
-				rapport.setCourseID(longCourse);
-				rapport.setGagnant(gain);
-				rapport.setArrivee(1);
-
-			    }else if( i == 2 ){
-				rapport.setPlace(gain);
-				logger.debug("1er => N" + rapport.getNumCheval() + " G:" + rapport.getGagnant() + " P:"
-					+ rapport.getPlace());
-
-				listeRapports.add(rapport);
-				// logger.info("Adding rapport : " + rapport);
-
-			    }else{
-				rapport = new Rapport();
-
-				rapport.setCourseID(longCourse);
-				rapport.setNumCheval(numCheval);
-				rapport.setArrivee(i-1);
-				rapport.setPlace(gain);
-
-				logger.debug(rapport.getArrivee() + "eme => N" + rapport.getNumCheval() + " P:"
-					+ rapport.getPlace());
-
-				listeRapports.add(rapport);
-				// logger.info("Adding rapport : " + rapport);
-
-
+			    } else if (discrimPmu.size() > 0) {
+				isRigthTable = "pmu";
+				firstLine = true;
 			    }
+			    // si on n'est pas sur le bon tableau, on passe au tableau suivant
+			    if (isRigthTable.isEmpty()) {
+				continue table;
+			    }
+			    // si on est sur le bon tableau mais 1ere ligne, on passe à la ligne suivante
+			    if (firstLine) {
+				continue line;
+			    }
+
+			    if( jCellule == 0 ){
+
+				String txt = uneCellule.text().trim();
+				txt = txt.replaceAll("[^\\d\\.\\,\\-]", "");
+				numCheval = Integer.parseInt( txt );
+
+			    }else if( jCellule == 1 ){
+				String txt = uneCellule.text().trim();
+				txt = txt.replace(",", ".");
+				txt = txt.replace("<b>", "");
+				txt = txt.replace("</b>", "");
+				txt = txt.replace(" ", "");
+				txt = txt.replace("€", "");
+				txt = txt.replaceAll("[^\\d\\.\\,\\-]", "");
+
+
+				gain = Double.parseDouble(txt);
+			    }
+
+			}// for cellules
+
+			if (isRigthTable.isEmpty()) {
+			    continue;
 			}
+			if (iLigne == 1) {
+			    rapport = new Rapport();
+			    rapport.setNumCheval(numCheval);
+			    rapport.setCourseID(longCourse);
+			    rapport.setGagnantPmu(gain);
+			    rapport.setArrivee(1);
+
+			} else if (iLigne == 2) {
+			    rapport.setPlacePmu(gain);
+
+			    listeRapports.add(rapport);
+			    logger.debug("PMU : 1er => N" + rapport.getNumCheval() + " G:" + rapport.getGagnantPmu()
+			    + " P:" + rapport.getPlacePmu());
+
+			} else {
+			    rapport = new Rapport();
+			    rapport.setCourseID(longCourse);
+			    rapport.setNumCheval(numCheval);
+			    rapport.setArrivee(iLigne - 1);
+			    rapport.setPlacePmu(gain);
+
+			    listeRapports.add(rapport);
+			    logger.debug("PMU : " + rapport.getArrivee() + "eme => N" + rapport.getNumCheval()
+			    + " P:" + rapport.getPlacePmu());
+			}
+
 		    }catch( Exception e  ){ // pour les Parses Exceptions
 			logger.error("Erreur RAPPORT : " + e.getMessage());
-
 		    }
-		}// for lignes
-		logger.info("Added " + listeRapports.size() + " rapports");
 
-		// nouveau tableau
+		}// for lignes
+
+
+	    } // for Tables
+
+
+	    // need to mix all result (can't save same courseid/numCheval in db)
+	    Map<String, Rapport> mixer = new HashMap<>();
+	    for (AbstractEntity entity : listeRapports.get()) {
+		if( entity instanceof Rapport ) {
+		    Rapport rapport = (Rapport) entity;
+		    String key = rapport.getCourseID()+"-"+rapport.getNumCheval();
+		    // si on a déjà stocké
+		    if( mixer.containsKey(key) ) {
+			Rapport old = mixer.get(key);
+			if (rapport.getGagnantGeny() != null) {
+			    old.setGagnantGeny(rapport.getGagnantGeny());
+			}
+			if (rapport.getPlaceGeny() != null) {
+			    old.setPlaceGeny(rapport.getPlaceGeny());
+			}
+			if (rapport.getGagnantPmu() != null) {
+			    old.setGagnantPmu(rapport.getGagnantPmu());
+			}
+			if (rapport.getPlacePmu() != null) {
+			    old.setPlacePmu(rapport.getPlacePmu());
+			}
+			mixer.put(key, old);
+
+		    } else {
+			mixer.put(key, rapport);
+		    }
+		}
 	    }
 
+	    // et on recréé la liste
+	    listeRapports.get().clear();
+	    for (Entry<String, Rapport> entry : mixer.entrySet()) {
+		listeRapports.add(entry.getValue());
+	    }
+	    logger.info("Added " + listeRapports.size() + " rapports");
 	}
 
+
+	return listeRapports;
+    }
+
+    public EntitiesList parseGenyRapport(Elements tables, Long longCourse) {
+
+	Rapport rapport = new Rapport();
+	EntitiesList listeRapports = new EntitiesList();
+
+	table: for (int iTable = 1; iTable < tables.size(); iTable++) {
+	    Element table = tables.get(iTable);
+	    Elements lignes = table.select("tr");
+	    if (lignes == null || lignes.size() == 0) {
+		continue;
+	    }
+	    if (iTable == 3) {
+		break table;
+	    }
+
+	    for (int iLigne = (iTable == 1 ? 1 : 0); iLigne < lignes.size(); iLigne++) {
+		Element uneLigne = lignes.get(iLigne);
+		Elements cellules = uneLigne.select("td");
+		if (cellules == null || cellules.size() == 0) {
+		    continue;
+		}
+
+		Integer numCheval = null;
+		Double gain = null;
+		try {
+		    for (int jCellule = 0; jCellule < cellules.size(); jCellule++) {
+			Element uneCellule = cellules.get(jCellule);
+
+			if (jCellule == 0) {
+			    String txt = uneCellule.text().trim();
+			    txt = txt.replaceAll("[^\\d\\.\\,\\-]", "");
+			    numCheval = Integer.parseInt(txt);
+
+			} else if (jCellule == 1) {
+			    String txt = uneCellule.text().trim();
+			    txt = txt.replace(",", ".");
+			    txt = txt.replace("<b>", "");
+			    txt = txt.replace("</b>", "");
+			    txt = txt.replace(" ", "");
+			    txt = txt.replace("€", "");
+			    txt = txt.replaceAll("[^\\d\\.\\,\\-]", "");
+
+			    gain = Double.parseDouble(txt);
+			}
+
+		    } // for cellules
+
+		    // Creating records from parsed
+		    if (iLigne == 1 && iTable == 1) {
+			rapport = new Rapport();
+			rapport.setNumCheval(numCheval);
+			rapport.setCourseID(longCourse);
+			rapport.setGagnantGeny(gain);
+			rapport.setArrivee(1);
+
+			// Soit 2eme ligne soit cas spécial de la partie GENY qui est sur 2
+			// tableaux.........
+		    } else if (iLigne == 0 && iTable == 2) {
+			rapport.setPlaceGeny(gain);
+			rapport.setNumCheval(numCheval);
+			rapport.setCourseID(longCourse);
+
+			Rapport clone = new Rapport();
+			clone.setArrivee(rapport.getArrivee());
+			clone.setCourseID(rapport.getCourseID());
+			clone.setGagnantGeny(
+				rapport.getGagnantGeny() != null ? Double.valueOf(rapport.getGagnantGeny()) : null);
+			clone.setGagnantPmu(rapport.getGagnantPmu());
+			clone.setNumCheval(rapport.getNumCheval());
+			clone.setPlaceGeny(rapport.getPlaceGeny());
+			clone.setPlacePmu(rapport.getPlacePmu());
+			listeRapports.add(clone);
+			rapport.setGagnantGeny(null);
+
+			logger.debug("Geny : 1er => N" + clone.getNumCheval() + " G:" + clone.getGagnantGeny()
+			+ " P:" + clone.getPlaceGeny());
+
+		    } else if (iTable == 2) {
+			rapport = new Rapport();
+
+			rapport.setCourseID(longCourse);
+			rapport.setNumCheval(numCheval);
+			rapport.setArrivee(iLigne + 1);
+			rapport.setPlaceGeny(gain);
+
+			logger.debug("Geny : " + rapport.getArrivee() + "eme => N" + rapport.getNumCheval() + " P:"
+				+ rapport.getPlaceGeny());
+
+			listeRapports.add(rapport);
+		    }
+
+		} catch (Exception e) { // pour les Parses Exceptions
+		    logger.error("Erreur RAPPORT : " + e.getMessage());
+		}
+
+	    } // for lignes
+	} // for Tables
+
+	logger.info("Geny Added " + listeRapports.size() + " rapports");
 	return listeRapports;
     }
 
@@ -556,9 +755,10 @@ public class GenyParser implements HtmlParser{
     public EntitiesList parse_partant(){
 	Long longCourse = parse_numCourse();
 
+	//	    cote.setRapportProbableGeny(null); // TODO retrieve data
 	EntitiesList partantsCourse = null;
 
-	if(  url.indexOf("/partants-pmu/") != -1 && longCourse != null){
+	if (url.indexOf("/partants-pmu") != -1 && longCourse != null) {
 	    logger.debug("=================================== Partants");
 	    logger.debug(url);
 
@@ -567,21 +767,25 @@ public class GenyParser implements HtmlParser{
 	    int colAgeSexe = 2;
 	    int colNom = 1;
 	    int colGains = 1;
+	    int colProbGeny = 9;
 	    for(int i = 0; i< celz.size(); i++){
 		Element oneCel = celz.get(i);
 		if( oneCel.text().trim().toLowerCase().equals( "musique" ) ){
 		    colMusique = i;
 		}
-		if( oneCel.text().trim().toLowerCase().equals( "sa" ) ){
+		else if (oneCel.text().trim().toLowerCase().equals("sa")) {
 		    colAgeSexe = i;
 		}
-		if( oneCel.text().trim().toLowerCase().equals( "cheval" ) ){
+		else if (oneCel.text().trim().toLowerCase().equals("cheval")) {
 		    colNom = i;
 		}
-		if (oneCel.text().trim().toLowerCase().equals("gains")
+		else if (oneCel.text().trim().toLowerCase().equals("gains")
 			|| oneCel.text().trim().toLowerCase().equals("valeur")) {
 
 		    colGains = i;
+		}
+		else if (oneCel.text().trim().toLowerCase().equals("Dernières cotes")) {
+		    colProbGeny = i;
 		}
 	    }
 
@@ -598,6 +802,7 @@ public class GenyParser implements HtmlParser{
 		    String musique = null;
 		    String nom = null;
 		    String gains = null;
+		    Float probGeny = null;
 		    if( cellules!=null && cellules.size() > 0 ){
 			for( int j=0; j < cellules.size(); j++ ){
 			    Element uneCellule = cellules.get(j);
@@ -628,6 +833,19 @@ public class GenyParser implements HtmlParser{
 					gains = cellules.get(j + 3).text().trim().replace(",", ".");
 				    }
 
+				} else if (j == colProbGeny) {
+				    String sProbGeny = uneCellule.text().trim().replace(",", ".");
+				    try {
+					probGeny = Float.parseFloat(sProbGeny);
+				    } catch (Exception e) {
+					sProbGeny = cellules.get(j + 3).text().trim().replace(",", ".");
+					try {
+					    probGeny = Float.parseFloat(sProbGeny);
+					} catch (Exception e2) {
+					    logger.debug("Error parsing probGeny : " + sProbGeny);
+					}
+				    }
+
 				}
 			    }catch( Exception e ){
 				// logger.error("Erreur sur une ligne 'Partant' : " + e.getMessage());
@@ -651,6 +869,7 @@ public class GenyParser implements HtmlParser{
 			    partantsBean.setMusique(musique);
 			    partantsBean.setNomCheval(nom);
 			    partantsBean.setGains(gains);
+			    partantsBean.setProbableGeny(probGeny);
 
 			    partantsCourse.add(partantsBean);
 			}

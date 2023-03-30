@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.ses10doigts.coursesCrawler.model.crawl.CrawlReport;
+import fr.ses10doigts.coursesCrawler.model.crawl.Report;
 import fr.ses10doigts.coursesCrawler.model.crawl.enumerate.FinalState;
 import fr.ses10doigts.coursesCrawler.model.crawl.enumerate.RunningState;
 import fr.ses10doigts.coursesCrawler.model.web.Configuration;
@@ -22,10 +22,10 @@ public class LaunchService {
     @Autowired
     private RefactorerService	 refacto;
 
-    public CrawlReport manageLaunch() {
+    public Report manageLaunch() {
 	Configuration configuration = conf.getConfiguration();
 
-	CrawlReport cr = new CrawlReport();
+	Report cr = new Report();
 	Thread t = null;
 	try {
 	    if (configuration.isLaunchCrawl()) {
@@ -34,11 +34,9 @@ public class LaunchService {
 	    }
 
 	    if (configuration.isLaunchRefacto()) {
-		if (t == null) {
-		    refacto.launchRefactorer();
-		} else {
-		    refacto.launchRefactorer(t);
-		}
+		// TODO rapport
+		refacto.launchRefactorer(t);
+
 	    }
 	} catch (IOException e) {
 

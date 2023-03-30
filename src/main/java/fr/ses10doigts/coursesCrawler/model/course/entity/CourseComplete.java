@@ -11,21 +11,43 @@ public class CourseComplete extends AbstractCourseEntity{
     private Long    courseID;
     private Integer nombrePartant;
     private Integer nombreChevauxInfCinq;
-    private Double  rapGagnant;
-    private Double  rapPlacePremier;
-    private Double  rapPlaceDeuxieme;
-    private Double  rapPlaceTroisieme;
+    private Double  rapGagnantGeny;
+    private Double  rapPlacePremierGeny;
+    private Double  rapPlaceDeuxiemeGeny;
+    private Double  rapPlaceTroisiemeGeny;
+    private Double  rapGagnantPmu;
+    private Double  rapPlacePremierPmu;
+    private Double  rapPlaceDeuxiemePmu;
+    private Double  rapPlaceTroisiemePmu;
     private Integer numeroChvlPremier;
     private Integer numeroChvlDeuxieme;
     private Integer numeroChvlTroisieme;
     private Float   totalPourcent;
+    private Float   cotePremierFavoris;
+    private Float   rapportPremierProbableGeny;
     private Float   pourcentPremierFavori;
     private Integer numeroPremierFavori;
+    private Float   coteDeuxiemeFavoris;
+    private Float   rapportDeuxiemeProbableGeny;
     private Float   pourcentDeuxiemeFavori;
     private Integer numeroDeuxiemeFavori;
+    private Float   coteTroisiemeFavoris;
+    private Float   rapportTroisiemeProbableGeny;
     private Float   pourcentTroisiemeFavori;
     private Integer numeroTroisiemeFavori;
     private Integer nombreChvlFavoriPlace;
+    private Float   cotePremierAvant;
+    private Float   cotePremierDepart;
+    private Float   coteDeuxiemeAvant;
+    private Float   coteDeuxiemeDepart;
+    private Float   coteTroisiemeAvant;
+    private Float   coteTroisiemeDepart;
+    private Float   pourcentPremierAvant;
+    private Float   pourcentPremierDepart;
+    private Float   pourcentDeuxiemeAvant;
+    private Float   pourcentDeuxiemeDepart;
+    private Float   pourcentTroisiemeAvant;
+    private Float   pourcentTroisiemeDepart;
     private String  dateCourse;
     private Integer numeroCourse;
     private Integer numeroReunion;
@@ -40,20 +62,6 @@ public class CourseComplete extends AbstractCourseEntity{
     private String  musiqueMeilleurGains;
     private Integer numeroMeilleurGains;
     private String  p1er;
-    private String  p2eme;
-    private String  p3eme;
-    private String  p4eme;
-    private String  p5eme;
-    private String  p6eme;
-    private String  p7eme;
-    private String  p8eme;
-    private String  p9eme;
-    private String  p10eme;
-    private String  p11eme;
-    private String  p12eme;
-    private String  p13eme;
-    private String  p14eme;
-    private String  p15eme;
 
     public CourseComplete() {
     }
@@ -72,25 +80,72 @@ public class CourseComplete extends AbstractCourseEntity{
 	this.nombreChevauxInfCinq = nombreChevauxInfCinq;
     }
 
-    public Double getRapGagnant() {
-	return rapGagnant;
-    }
-    public void setRapGagnant(Double rapGagnant) {
-	this.rapGagnant = rapGagnant;
+    public Double getRapGagnantGeny() {
+	return rapGagnantGeny;
     }
 
-    public Double getRapPlaceDeuxieme() {
-	return rapPlaceDeuxieme;
-    }
-    public void setRapPlaceDeuxieme(Double rapPlaceDeuxieme) {
-	this.rapPlaceDeuxieme = rapPlaceDeuxieme;
+    public void setRapGagnantGeny(Double rapGagnantGeny) {
+	this.rapGagnantGeny = rapGagnantGeny;
     }
 
-    public Double getRapPlaceTroisieme() {
-	return rapPlaceTroisieme;
+    public Double getRapPlacePremierGeny() {
+	return rapPlacePremierGeny;
     }
-    public void setRapPlaceTroisieme(Double rapPlaceTroisieme) {
-	this.rapPlaceTroisieme = rapPlaceTroisieme;
+
+    public void setRapPlacePremierGeny(Double rapPlacePremierGeny) {
+	this.rapPlacePremierGeny = rapPlacePremierGeny;
+    }
+
+    public Double getRapPlaceDeuxiemeGeny() {
+	return rapPlaceDeuxiemeGeny;
+    }
+
+    public void setRapPlaceDeuxiemeGeny(Double rapPlaceDeuxiemeGeny) {
+	this.rapPlaceDeuxiemeGeny = rapPlaceDeuxiemeGeny;
+    }
+
+    public Double getRapPlaceTroisiemeGeny() {
+	return rapPlaceTroisiemeGeny;
+    }
+
+    public void setRapPlaceTroisiemeGeny(Double rapPlaceTroisiemeGeny) {
+	this.rapPlaceTroisiemeGeny = rapPlaceTroisiemeGeny;
+    }
+
+    public Double getRapGagnantPmu() {
+	return rapGagnantPmu;
+    }
+
+    public void setRapGagnantPmu(Double rapGagnantPmu) {
+	this.rapGagnantPmu = rapGagnantPmu;
+    }
+
+    public Double getRapPlacePremierPmu() {
+	return rapPlacePremierPmu;
+    }
+
+    public void setRapPlacePremierPmu(Double rapPlacePremierPmu) {
+	this.rapPlacePremierPmu = rapPlacePremierPmu;
+    }
+
+    public Double getRapPlaceDeuxiemePmu() {
+	return rapPlaceDeuxiemePmu;
+    }
+
+    public void setRapPlaceDeuxiemePmu(Double rapPlaceDeuxiemePmu) {
+	this.rapPlaceDeuxiemePmu = rapPlaceDeuxiemePmu;
+    }
+
+    public Double getRapPlaceTroisiemePmu() {
+	return rapPlaceTroisiemePmu;
+    }
+
+    public void setRapPlaceTroisiemePmu(Double rapPlaceTroisiemePmu) {
+	this.rapPlaceTroisiemePmu = rapPlaceTroisiemePmu;
+    }
+
+    public void setNumeroMeilleurGains(Integer numeroMeilleurGains) {
+	this.numeroMeilleurGains = numeroMeilleurGains;
     }
 
     public Integer getNumeroChvlPremier() {
@@ -229,16 +284,33 @@ public class CourseComplete extends AbstractCourseEntity{
     public String getPrime() {
 	return prime;
     }
+
     public void setPrime(String prime) {
 	this.prime = prime;
     }
 
-
-    public Double getRapPlacePremier() {
-	return rapPlacePremier;
+    public Float getRapportPremierProbableGeny() {
+	return rapportPremierProbableGeny;
     }
-    public void setRapPlacePremier(Double rapPlacePremier) {
-	this.rapPlacePremier = rapPlacePremier;
+
+    public void setRapportPremierProbableGeny(Float rapportPremierProbableGeny) {
+	this.rapportPremierProbableGeny = rapportPremierProbableGeny;
+    }
+
+    public Float getRapportDeuxiemeProbableGeny() {
+	return rapportDeuxiemeProbableGeny;
+    }
+
+    public void setRapportDeuxiemeProbableGeny(Float rapportDeuxiemeProbableGeny) {
+	this.rapportDeuxiemeProbableGeny = rapportDeuxiemeProbableGeny;
+    }
+
+    public Float getRapportTroisiemeProbableGeny() {
+	return rapportTroisiemeProbableGeny;
+    }
+
+    public void setRapportTroisiemeProbableGeny(Float rapportTroisiemeProbableGeny) {
+	this.rapportTroisiemeProbableGeny = rapportTroisiemeProbableGeny;
     }
 
     public String getNomChvlPremier() {
@@ -247,7 +319,6 @@ public class CourseComplete extends AbstractCourseEntity{
     public void setNomChvlPremier(String nomChvlPremier) {
 	this.nomChvlPremier = nomChvlPremier;
     }
-
 
     public String getMusiqueMeilleurGains() {
 	return musiqueMeilleurGains;
@@ -263,7 +334,6 @@ public class CourseComplete extends AbstractCourseEntity{
 	this.numeroMeilleurGains = numeroMeilleurGains;
     }
 
-
     public Integer getGainChvlPremier() {
 	return gainChvlPremier;
     }
@@ -271,109 +341,124 @@ public class CourseComplete extends AbstractCourseEntity{
 	this.gainChvlPremier = integer;
     }
 
-    public String getP1er() {
-	return p1er;
-    }
-    public void setP1er(String p1er) {
-	this.p1er = p1er;
+    public Float getCotePremierFavoris() {
+	return cotePremierFavoris;
     }
 
-    public String getP2eme() {
-	return p2eme;
-    }
-    public void setP2eme(String p2eme) {
-	this.p2eme = p2eme;
+    public void setCotePremierFavoris(Float cotePremierFavoris) {
+	this.cotePremierFavoris = cotePremierFavoris;
     }
 
-    public String getP3eme() {
-	return p3eme;
-    }
-    public void setP3eme(String p3eme) {
-	this.p3eme = p3eme;
+    public Float getCoteDeuxiemeFavoris() {
+	return coteDeuxiemeFavoris;
     }
 
-    public String getP4eme() {
-	return p4eme;
-    }
-    public void setP4eme(String p4eme) {
-	this.p4eme = p4eme;
+    public void setCoteDeuxiemeFavoris(Float coteDeuxiemeFavoris) {
+	this.coteDeuxiemeFavoris = coteDeuxiemeFavoris;
     }
 
-    public String getP5eme() {
-	return p5eme;
-    }
-    public void setP5eme(String p5eme) {
-	this.p5eme = p5eme;
+    public Float getCoteTroisiemeFavoris() {
+	return coteTroisiemeFavoris;
     }
 
-    public String getP6eme() {
-	return p6eme;
-    }
-    public void setP6eme(String p6eme) {
-	this.p6eme = p6eme;
+    public void setCoteTroisiemeFavoris(Float coteTroisiemeFavoris) {
+	this.coteTroisiemeFavoris = coteTroisiemeFavoris;
     }
 
-    public String getP7eme() {
-	return p7eme;
-    }
-    public void setP7eme(String p7eme) {
-	this.p7eme = p7eme;
+    public Float getCotePremierAvant() {
+	return cotePremierAvant;
     }
 
-    public String getP8eme() {
-	return p8eme;
-    }
-    public void setP8eme(String p8eme) {
-	this.p8eme = p8eme;
+    public void setCotePremierAvant(Float cotePremierAvant) {
+	this.cotePremierAvant = cotePremierAvant;
     }
 
-    public String getP9eme() {
-	return p9eme;
-    }
-    public void setP9eme(String p9eme) {
-	this.p9eme = p9eme;
+    public Float getCotePremierDepart() {
+	return cotePremierDepart;
     }
 
-    public String getP10eme() {
-	return p10eme;
-    }
-    public void setP10eme(String p10eme) {
-	this.p10eme = p10eme;
+    public void setCotePremierDepart(Float cotePremierDepart) {
+	this.cotePremierDepart = cotePremierDepart;
     }
 
-    public String getP11eme() {
-	return p11eme;
-    }
-    public void setP11eme(String p11eme) {
-	this.p11eme = p11eme;
+    public Float getCoteDeuxiemeAvant() {
+	return coteDeuxiemeAvant;
     }
 
-    public String getP12eme() {
-	return p12eme;
-    }
-    public void setP12eme(String p12eme) {
-	this.p12eme = p12eme;
+    public void setCoteDeuxiemeAvant(Float coteDeuxiemeAvant) {
+	this.coteDeuxiemeAvant = coteDeuxiemeAvant;
     }
 
-    public String getP13eme() {
-	return p13eme;
-    }
-    public void setP13eme(String p13eme) {
-	this.p13eme = p13eme;
+    public Float getCoteDeuxiemeDepart() {
+	return coteDeuxiemeDepart;
     }
 
-    public String getP14eme() {
-	return p14eme;
-    }
-    public void setP14eme(String p14eme) {
-	this.p14eme = p14eme;
+    public void setCoteDeuxiemeDepart(Float coteDeuxiemeDepart) {
+	this.coteDeuxiemeDepart = coteDeuxiemeDepart;
     }
 
-    public String getP15eme() {
-	return p15eme;
+    public Float getCoteTroisiemeAvant() {
+	return coteTroisiemeAvant;
     }
-    public void setP15eme(String p15eme) {
-	this.p15eme = p15eme;
+
+    public void setCoteTroisiemeAvant(Float coteTroisiemeAvant) {
+	this.coteTroisiemeAvant = coteTroisiemeAvant;
+    }
+
+    public Float getCoteTroisiemeDepart() {
+	return coteTroisiemeDepart;
+    }
+
+    public void setCoteTroisiemeDepart(Float coteTroisiemeDepart) {
+	this.coteTroisiemeDepart = coteTroisiemeDepart;
+    }
+
+    public Float getPourcentPremierAvant() {
+	return pourcentPremierAvant;
+    }
+
+    public void setPourcentPremierAvant(Float pourcentPremierAvant) {
+	this.pourcentPremierAvant = pourcentPremierAvant;
+    }
+
+    public Float getPourcentPremierDepart() {
+	return pourcentPremierDepart;
+    }
+
+    public void setPourcentPremierDepart(Float pourcentPremierDepart) {
+	this.pourcentPremierDepart = pourcentPremierDepart;
+    }
+
+    public Float getPourcentDeuxiemeAvant() {
+	return pourcentDeuxiemeAvant;
+    }
+
+    public void setPourcentDeuxiemeAvant(Float pourcentDeuxiemeAvant) {
+	this.pourcentDeuxiemeAvant = pourcentDeuxiemeAvant;
+    }
+
+    public Float getPourcentDeuxiemeDepart() {
+	return pourcentDeuxiemeDepart;
+    }
+
+    public void setPourcentDeuxiemeDepart(Float pourcentDeuxiemeDepart) {
+	this.pourcentDeuxiemeDepart = pourcentDeuxiemeDepart;
+    }
+
+    public Float getPourcentTroisiemeAvant() {
+	return pourcentTroisiemeAvant;
+    }
+
+    public void setPourcentTroisiemeAvant(Float pourcentTroisiemeAvant) {
+	this.pourcentTroisiemeAvant = pourcentTroisiemeAvant;
+    }
+
+    public Float getPourcentTroisiemeDepart() {
+	return pourcentTroisiemeDepart;
+    }
+
+    public void setPourcentTroisiemeDepart(Float pourcentTroisiemeDepart) {
+	this.pourcentTroisiemeDepart = pourcentTroisiemeDepart;
     }
 
     @Override
@@ -395,6 +480,16 @@ public class CourseComplete extends AbstractCourseEntity{
     public String toString() {
 	return "CourseComplete [courseID=" + courseID + ", numeroCourse=" + numeroCourse + ", numeroReunion="
 		+ numeroReunion + ", hippodrome=" + hippodrome + "]";
+    }
+
+    public void setP1er(String string) {
+	p1er = string;
+
+    }
+
+    public String getP1er() {
+	return p1er;
+
     }
 
 }

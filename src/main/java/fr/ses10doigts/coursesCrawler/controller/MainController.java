@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import fr.ses10doigts.coursesCrawler.model.crawl.CrawlReport;
+import fr.ses10doigts.coursesCrawler.model.crawl.Report;
 import fr.ses10doigts.coursesCrawler.model.web.Configuration;
 import fr.ses10doigts.coursesCrawler.service.course.RefactorerService;
 import fr.ses10doigts.coursesCrawler.service.crawl.CrawlService;
@@ -22,7 +22,7 @@ import fr.ses10doigts.coursesCrawler.service.web.LaunchService;
 public class MainController {
 
     @Autowired
-    private ConfigurationService conf;
+    private ConfigurationService configurationService;
     @Autowired
     private CrawlService	 crawlService;
     @Autowired
@@ -34,35 +34,37 @@ public class MainController {
 
     @GetMapping("/")
     public String home(Model model) {
-	model.addAttribute("configuration", conf.getConfiguration());
-	model.addAttribute("report", crawlService.getReportCurrentCrawl());
+	model.addAttribute("configuration", configurationService.getConfiguration());
+	model.addAttribute("crawlReport", crawlService.getReportCurrentCrawl());
+	model.addAttribute("refactReport", refactoService.getReportCurrentRefact());
 
 	return "home";
     }
 
-    @PostMapping(value = "/launch", params = "action=save")
+    @PostMapping(value = "/", params = "action=save")
     public ModelAndView saveConfig(@ModelAttribute Configuration dto) {
 	logger.info("User ask to save config : " + dto);
 
-	conf.saveConfiguration(dto);
+	configurationService.saveConfiguration(dto);
 	return new ModelAndView("redirect:/");
     }
 
-    @PostMapping(value = "/launch", params = "action=launch")
+    @PostMapping(value = "/", params = "action=launch")
     public ModelAndView launchCrawl(@ModelAttribute Configuration dto) {
 	logger.info("User ask to launch with config : " + dto);
 
-	conf.saveConfiguration(dto);
-	CrawlReport crawlReport = launcher.manageLaunch();
+	configurationService.saveConfiguration(dto);
+	Report crawlReport = launcher.manageLaunch();
 
 	ModelAndView mav = new ModelAndView("home");
-	mav.addObject("configuration", conf.getConfiguration());
-	mav.addObject("report", crawlReport);
+	mav.addObject("configuration", configurationService.getConfiguration());
+	mav.addObject("crawlReport", crawlReport);
+	mav.addObject("refactReport", refactoService.getReportCurrentRefact());
 
 	return mav;
     }
 
-    @PostMapping(value = "/launch", params = "action=stop")
+    @PostMapping(value = "/", params = "action=stop")
     public ModelAndView stop() {
 	logger.info("User ask to stop ");
 
@@ -70,8 +72,27 @@ public class MainController {
 	refactoService.stopRefactorer();
 
 	ModelAndView mav = new ModelAndView("home");
-	mav.addObject("configuration", conf.getConfiguration());
-	mav.addObject("report", crawlService.getReportCurrentCrawl());
+	mav.addObject("configuration", configurationService.getConfiguration());
+	mav.addObject("crawlReport", crawlService.getReportCurrentCrawl());
+	mav.addObject("refactReport", refactoService.getReportCurrentRefact());
+
+	return mav;
+    }
+
+    @PostMapping(value = "/", params = "action=generate")
+    public ModelAndView generate(@ModelAttribute Configuration dto) {
+	logger.info("User ask to generate ");
+
+	String urls = configurationService.generateUrlFromDates(dto.getStartGenDate(), dto.getEndGenDate());
+
+	dto.setTxtSeeds(urls);
+
+	configurationService.saveConfiguration(dto);
+
+	ModelAndView mav = new ModelAndView("home");
+	mav.addObject("configuration", dto);
+	mav.addObject("crawlReport", crawlService.getReportCurrentCrawl());
+	mav.addObject("refactReport", refactoService.getReportCurrentRefact());
 
 	return mav;
     }

@@ -26,7 +26,10 @@ public class Chrono {
     }
 
     public String compareToHour() {
-	long millis = compare();
+	return Chrono.longMillisToHour(compare());
+    }
+
+    public static String longMillisToHour(long millis) {
 	long seconds = millis / 1000;
 	LocalTime timeOfDay = LocalTime.ofSecondOfDay(seconds);
 	String time = timeOfDay.toString();

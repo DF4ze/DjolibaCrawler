@@ -10,16 +10,20 @@ import fr.ses10doigts.coursesCrawler.model.crawl.PageReport;
 import fr.ses10doigts.coursesCrawler.model.crawl.enumerate.ChainState;
 import fr.ses10doigts.coursesCrawler.model.crawl.enumerate.FinalState;
 import fr.ses10doigts.coursesCrawler.model.crawl.enumerate.RunningState;
+import fr.ses10doigts.coursesCrawler.service.course.tool.Chrono;
 
-public class Report {
+public class CrawlReport {
     private static Map<String, PageReport> urlsReport = new HashMap<>();
+    private long			   time	      = 0;
+    private boolean			   running    = false;
+    private Chrono			   chrono     = new Chrono();
 
-    private Report() {
+    private CrawlReport() {
 
     }
 
-    public static Report getInstance() {
-	return new Report();
+    public static CrawlReport getInstance() {
+	return new CrawlReport();
     }
 
     public void setSeeds(Set<String> urls) {
@@ -90,6 +94,8 @@ public class Report {
 	pr.chainState = ChainState.CRAWLING;
 	pr.runningState = RunningState.PROCESSING;
 	urlsReport.put(url, pr);
+	running = true;
+	chrono.pick();
     }
 
     public void errorCrawl(String url) {
@@ -106,6 +112,8 @@ public class Report {
 	pr.finalState = FinalState.SUCCESS;
 	pr.runningState = RunningState.ENDED;
 	urlsReport.put(url, pr);
+	running = false;
+	time = chrono.compare();
     }
 
     public void startStore(String url) {
@@ -138,6 +146,17 @@ public class Report {
 	pr.chainState = ChainState.CRAWLING;
 	pr.runningState = RunningState.PENDING;
 	urlsReport.put(url, pr);
+    }
+
+    public long getTime() {
+	if( running ){
+	    return chrono.compare();
+	}
+	return time;
+    }
+
+    public void setTime(long time) {
+	this.time = time;
     }
 
 }

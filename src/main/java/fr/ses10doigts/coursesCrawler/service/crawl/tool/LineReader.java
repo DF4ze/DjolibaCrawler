@@ -28,7 +28,9 @@ public class LineReader {
 
 	Set<String> urlList = new HashSet<>();
 	for (String url : lines) {
-	    urlList.add(url);
+	    if (!url.isBlank()) {
+		urlList.add(url);
+	    }
 	}
 
 	return urlList;

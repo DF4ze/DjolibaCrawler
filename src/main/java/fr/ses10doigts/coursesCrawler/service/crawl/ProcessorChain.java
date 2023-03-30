@@ -18,8 +18,8 @@ import fr.ses10doigts.coursesCrawler.model.crawl.enumerate.Agressivity;
 import fr.ses10doigts.coursesCrawler.repository.web.WebCrawlingProxy;
 import fr.ses10doigts.coursesCrawler.service.course.HtmlVisitor;
 import fr.ses10doigts.coursesCrawler.service.course.tool.Chrono;
+import fr.ses10doigts.coursesCrawler.service.crawl.tool.CrawlReport;
 import fr.ses10doigts.coursesCrawler.service.crawl.tool.PageTool;
-import fr.ses10doigts.coursesCrawler.service.crawl.tool.Report;
 
 @Service
 public class ProcessorChain implements Runnable {
@@ -40,7 +40,7 @@ public class ProcessorChain implements Runnable {
     private Agressivity		agressivity;
     private boolean		running	= true;
     private Queue<Page>		enQueued;
-    private Report		report	= Report.getInstance();
+    private CrawlReport		report	= CrawlReport.getInstance();
     private Chrono		chrono;
 
     private static final Logger	logger = LoggerFactory.getLogger(ProcessorChain.class);
@@ -100,6 +100,7 @@ public class ProcessorChain implements Runnable {
 	logger.info("Crawl ended");
 	logger.info(
 		"Crawled " + report.getSuccessCrawled() + "/" + report.size() + " pages in " + chrono.compareToHour());
+	report.setTime(chrono.compare());
 
     }
 
@@ -118,11 +119,11 @@ public class ProcessorChain implements Runnable {
 	try {
 	    // Download content
 	    String content = webRepo.getRawPage(page.getUrl());
-	    //	    page.setContent(content);
 
 	    logger.info("Url downloaded : " + page.getUrl());
 	    report.stopCrawl(page.getUrl());
 
+	    // Parse content
 	    htmlVisitor.indexify(page.getUrl(), content);
 
 	    // If maxhop not reached
@@ -240,7 +241,7 @@ public class ProcessorChain implements Runnable {
 	return running;
     }
 
-    public Report getReport() {
+    public CrawlReport getReport() {
 	return report;
     }
 

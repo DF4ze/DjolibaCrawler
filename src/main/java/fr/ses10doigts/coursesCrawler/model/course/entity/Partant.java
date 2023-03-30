@@ -23,6 +23,7 @@ public class Partant extends AbstractCourseEntity implements Cloneable{
     private String musique;
     private String gains;
     private Integer iGains;
+    private Float   probableGeny;
 
 
     public Partant() {
@@ -103,6 +104,16 @@ public class Partant extends AbstractCourseEntity implements Cloneable{
 	this.iGains = iGains;
     }
 
+    public void setProbableGeny(Float probGeny) {
+	this.probableGeny = probGeny;
+
+    }
+
+    public Float getProbableGeny() {
+	return probableGeny;
+    }
+
+
     @Override
     public Partant clone() {
 	Partant o = new Partant();
@@ -126,5 +137,6 @@ public class Partant extends AbstractCourseEntity implements Cloneable{
 	return "Partant [id=" + id + ", courseID=" + courseID + ", numCheval=" + numCheval + ", nomCheval=" + nomCheval
 		+ ", ageSexe=" + ageSexe + ", musique=" + musique + ", gains=" + gains + ", iGains=" + iGains + "]";
     }
+
 
 }

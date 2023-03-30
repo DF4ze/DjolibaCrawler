@@ -1,7 +1,14 @@
 package fr.ses10doigts.coursesCrawler.service.web;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +25,11 @@ public class ConfigurationService {
     private LineWriter	     writer;
     @Autowired
     private CustomProperties props;
+
+    private static final Logger	logger = LoggerFactory.getLogger(ConfigurationService.class);
+    private static final DateFormat urlDateFormat    = new SimpleDateFormat("yyyy/MM/dd");
+    private static final DateFormat writenDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
 
     public Configuration getConfiguration() {
 	Configuration conf = new Configuration();
@@ -48,46 +60,61 @@ public class ConfigurationService {
 	    conf.setAuthorized(txtAuth);
 
 	} catch (Exception e) {
-
+	    logger.warn("Seeds or/and Authorised file(s) not found ");
 	}
 	return conf;
     }
 
-    public void saveConfiguration(Configuration dto) {
+    public void saveConfiguration(Configuration conf) {
 	try {
-	    //	    // create and set properties into properties object
-	    //	    Properties properties = new Properties();
-	    //	    properties.setProperty("fr.ses10doigts.crawler.agressivity", dto.getAgressivity().name());
-	    //	    properties.setProperty("fr.ses10doigts.crawler.maxHop", dto.getMaxHop() + "");
-	    //	    properties.setProperty("fr.ses10doigts.crawler.maxRetry", dto.getMaxRetry() + "");
-	    //	    properties.setProperty("fr.ses10doigts.crawler.doCrawl", Boolean.toString(dto.isLaunchCrawl()));
-	    //	    properties.setProperty("fr.ses10doigts.crawler.doRefacto", Boolean.toString(dto.isLaunchRefacto()));
-	    //
-	    //	    // get or create the file
-	    //	    File f = new File("application.properties");
-	    //	    System.out.println(f.getAbsolutePath());
-	    //	    //	    OutputStream out = new FileOutputStream(f);
-	    //	    //	    // write into it
-	    //	    //	    DefaultPropertiesPersister p = new DefaultPropertiesPersister();
-	    //	    //	    p.store(properties, out, "Application own properties");
-	    //	    FileWriter fw = new FileWriter(f);
-	    //	    properties.store(fw, "Application's own properties");
 
-	    props.setAgressivity(dto.getAgressivity());
-	    props.setMaxHop(dto.getMaxHop());
-	    props.setMaxRetry(dto.getMaxRetry());
-	    props.setDoCrawl(dto.isLaunchCrawl());
-	    props.setDoRefacto(dto.isLaunchRefacto());
+
+	    props.setAgressivity(conf.getAgressivity());
+	    props.setMaxHop(conf.getMaxHop());
+	    props.setMaxRetry(conf.getMaxRetry());
+	    props.setDoCrawl(conf.isLaunchCrawl());
+	    props.setDoRefacto(conf.isLaunchRefacto());
 
 	    writer.setFilePath(props.getSeedsFile());
-	    writer.StringToFile(dto.getTxtSeeds());
+	    writer.StringToFile(conf.getTxtSeeds());
 
 	    writer.setFilePath(props.getAuthorizedFile());
-	    writer.StringToFile(dto.getAuthorized());
+	    writer.StringToFile(conf.getAuthorized());
 
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
 
+    }
+
+    public String generateUrlFromDates(String sStartDate, String sEndDate) {
+
+	Date startDate = null;
+	Date endDate = null;
+	try {
+	    startDate = writenDateFormat.parse(sStartDate);
+	    endDate = writenDateFormat.parse(sEndDate);
+	} catch (ParseException e) {
+	    return "Date must be dd/mm/yyyy";
+	}
+
+	// Secure
+	Date comp = new Date();
+	if (startDate == null || endDate == null || startDate.after(endDate) || startDate.after(comp)
+		|| endDate.after(comp)) {
+	    return null;
+	}
+	// convert date to calendar
+	Calendar c = Calendar.getInstance();
+	c.setTime(startDate);
+
+	String urlList = "";
+	do {
+	    comp = c.getTime();
+	    urlList += "https://www.geny.com/reunions-courses-pmu?date=" + urlDateFormat.format(comp) + "\n";
+	    c.add(Calendar.DATE, 1);
+	} while (comp.before(endDate));
+
+	return urlList;
     }
 }

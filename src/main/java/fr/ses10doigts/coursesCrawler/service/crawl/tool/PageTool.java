@@ -71,6 +71,11 @@ public class PageTool {
 		    matchAuthorised = true;
 		}
 	    }
+	    // if no filter, authorised all
+	    if (authorized.size() == 0) {
+		matchAuthorised = true;
+	    }
+
 	    if (matchAuthorised) {
 		potentialUrls.add(foundedUrl);
 

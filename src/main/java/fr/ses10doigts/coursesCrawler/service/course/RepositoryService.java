@@ -29,17 +29,17 @@ import fr.ses10doigts.coursesCrawler.repository.course.RapportRepository;
 public class RepositoryService {
 
     @Autowired
-    private ArriveeRepository arriveeRepository;
+    private ArriveeRepository	     arriveeRepository;
     @Autowired
-    private CoteRepository coteRepository;
+    private CoteRepository	     coteRepository;
     @Autowired
     private CourseCompleteRepository courseCompleteRepository;
     @Autowired
-    private CourseRepository courseRepository;
+    private CourseRepository	     courseRepository;
     @Autowired
-    private PartantRepository partantRepository;
+    private PartantRepository	     partantRepository;
     @Autowired
-    private RapportRepository rapportRepository;
+    private RapportRepository	     rapportRepository;
 
     private static final Logger	     logger = LoggerFactory.getLogger(RepositoryService.class);
 

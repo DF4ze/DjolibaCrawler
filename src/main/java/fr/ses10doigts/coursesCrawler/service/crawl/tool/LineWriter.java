@@ -1,5 +1,6 @@
 package fr.ses10doigts.coursesCrawler.service.crawl.tool;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -22,7 +23,12 @@ public class LineWriter {
 	}
 
 	Path path = Paths.get(filePath);
-	Files.writeString(path, txt, StandardOpenOption.TRUNCATE_EXISTING);
+	if (txt == null || txt.trim().isEmpty()) {
+	    new FileOutputStream(filePath).close();
+	} else {
+	    new FileOutputStream(filePath).close();
+	    Files.writeString(path, txt, StandardOpenOption.CREATE);
+	}
 
     }
 

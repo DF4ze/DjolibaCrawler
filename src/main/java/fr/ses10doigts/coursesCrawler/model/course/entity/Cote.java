@@ -21,6 +21,7 @@ public class Cote extends AbstractCourseEntity {
     private Float   coteAvant;
     private Float   enjeuxDepart;
     private Float   enjeuxAvant;
+    private Float   rapportProbableGeny;
 
     public Cote() {
     }
@@ -80,6 +81,14 @@ public class Cote extends AbstractCourseEntity {
 
     public void setEnjeuxAvant(Float enjeuxAvant) {
 	this.enjeuxAvant = enjeuxAvant;
+    }
+
+    public Float getRapportProbableGeny() {
+	return rapportProbableGeny;
+    }
+
+    public void setRapportProbableGeny(Float rapportProbableGeny) {
+	this.rapportProbableGeny = rapportProbableGeny;
     }
 
     @Override

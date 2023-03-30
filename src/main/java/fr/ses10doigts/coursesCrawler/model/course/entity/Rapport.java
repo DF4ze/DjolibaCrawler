@@ -15,12 +15,14 @@ public class Rapport extends AbstractCourseEntity{
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
-    private Long courseID;
+    private Long    id;
+    private Long    courseID;
     private Integer numCheval;
     private Integer arrivee;
-    private Double place;
-    private Double gagnant;
+    private Double  placeGeny;
+    private Double  gagnantGeny;
+    private Double  placePmu;
+    private Double  gagnantPmu;
 
 
     public Rapport() {
@@ -61,25 +63,44 @@ public class Rapport extends AbstractCourseEntity{
     }
 
 
-    public Double getPlace() {
-	return place;
-    }
-    public void setPlace(Double place) {
-	this.place = place;
+    public Double getPlaceGeny() {
+	return placeGeny;
     }
 
-
-    public Double getGagnant() {
-	return gagnant;
+    public void setPlaceGeny(Double placeGeny) {
+	this.placeGeny = placeGeny;
     }
-    public void setGagnant(Double gagnant) {
-	this.gagnant = gagnant;
+
+    public Double getGagnantGeny() {
+	return gagnantGeny;
+    }
+
+    public void setGagnantGeny(Double gagnantGeny) {
+	this.gagnantGeny = gagnantGeny;
+    }
+
+    public Double getPlacePmu() {
+	return placePmu;
+    }
+
+    public void setPlacePmu(Double placePmu) {
+	this.placePmu = placePmu;
+    }
+
+    public Double getGagnantPmu() {
+	return gagnantPmu;
+    }
+
+    public void setGagnantPmu(Double gagantPmu) {
+	this.gagnantPmu = gagantPmu;
     }
 
     @Override
     public String toString() {
 	return "Rapport [id=" + id + ", courseID=" + courseID + ", numCheval=" + numCheval + ", arrivee=" + arrivee
-		+ ", place=" + place + ", gagnant=" + gagnant + "]";
+		+ ", placeGeny=" + placeGeny + ", gagnantGeny=" + gagnantGeny + ", placePmu=" + placePmu
+		+ ", gagantPmu=" + gagnantPmu + "]";
     }
+
 
 }
