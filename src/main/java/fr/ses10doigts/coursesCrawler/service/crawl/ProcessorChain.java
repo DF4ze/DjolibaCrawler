@@ -120,7 +120,7 @@ public class ProcessorChain implements Runnable {
 	    // Download content
 	    String content = webRepo.getRawPage(page.getUrl());
 
-	    logger.info("Url downloaded : " + page.getUrl());
+	    logger.debug("Url downloaded : " + page.getUrl());
 	    report.stopCrawl(page.getUrl());
 
 	    // Parse content

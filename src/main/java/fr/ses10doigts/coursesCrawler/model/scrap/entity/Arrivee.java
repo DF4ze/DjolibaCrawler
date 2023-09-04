@@ -2,9 +2,6 @@ package fr.ses10doigts.coursesCrawler.model.scrap.entity;
 
 import fr.ses10doigts.coursesCrawler.model.scrap.AbstractCourseEntity;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
@@ -12,10 +9,7 @@ import jakarta.persistence.UniqueConstraint;
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"courseID", "numChv"}))
 public class Arrivee extends AbstractCourseEntity {
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
-    private Long courseID;
+
 
     private Integer numArrivee;
     private Integer numChv;
@@ -25,30 +19,17 @@ public class Arrivee extends AbstractCourseEntity {
 	super();
     }
 
-    public Arrivee(Long courseId, Integer numArrivee, Integer numChv, String nomChv) {
+    public Arrivee(String url, Long courseId, Integer numArrivee, Integer numChv, String nomChv) {
 	super();
-	this.courseID = courseId;
+	setUrl(url);
+	setCourseID(courseId);
 	this.numArrivee = numArrivee;
 	this.numChv = numChv;
 	this.nomChv = nomChv;
     }
 
-    @Override
-    public Long getId() {
-	return id;
-    }
-    public void setId(Long id) {
-	this.id = id;
-    }
 
-    @Override
-    public Long getCourseID() {
-	return courseID;
-    }
-    @Override
-    public void setCourseID(Long courseID) {
-	this.courseID = courseID;
-    }
+
 
     public Integer getNumArrivee() {
 	return numArrivee;
@@ -75,8 +56,8 @@ public class Arrivee extends AbstractCourseEntity {
 
     @Override
     public String toString() {
-	return "Arrivee [id=" + id + ", CourseId=" + courseID + ", numArrivee=" + numArrivee + ", numChv=" + numChv
-		+ ", nomChv=" + nomChv + "]";
+	return "Arrivee [id=" + getId() + ", CourseId=" + getCourseID() + ", numArrivee=" + numArrivee + ", numChv="
+		+ numChv + ", nomChv=" + nomChv + "]";
     }
 
 

@@ -27,7 +27,7 @@ public class ConfigurationService {
     private CustomProperties props;
 
     private static final Logger	logger = LoggerFactory.getLogger(ConfigurationService.class);
-    private static final DateFormat urlDateFormat    = new SimpleDateFormat("yyyy/MM/dd");
+    private static final DateFormat urlDateFormat    = new SimpleDateFormat("yyyy-MM-dd");
     private static final DateFormat writenDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 

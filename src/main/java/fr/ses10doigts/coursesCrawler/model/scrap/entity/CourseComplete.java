@@ -2,13 +2,11 @@ package fr.ses10doigts.coursesCrawler.model.scrap.entity;
 
 import fr.ses10doigts.coursesCrawler.model.scrap.AbstractCourseEntity;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 
 @Entity
 public class CourseComplete extends AbstractCourseEntity{
 
-    @Id
-    private Long    courseID;
+
     private Integer nombrePartant;
     private Integer nombreChevauxInfCinq;
     private Double  rapGagnantGeny;
@@ -461,24 +459,11 @@ public class CourseComplete extends AbstractCourseEntity{
 	this.pourcentTroisiemeDepart = pourcentTroisiemeDepart;
     }
 
-    @Override
-    public Long getCourseID() {
-	return courseID;
-    }
 
-    @Override
-    public void setCourseID(Long courseID) {
-	this.courseID = courseID;
-    }
-
-    @Override
-    public Long getId() {
-	return courseID;
-    }
 
     @Override
     public String toString() {
-	return "CourseComplete [courseID=" + courseID + ", numeroCourse=" + numeroCourse + ", numeroReunion="
+	return "CourseComplete [courseID=" + getCourseID() + ", numeroCourse=" + numeroCourse + ", numeroReunion="
 		+ numeroReunion + ", hippodrome=" + hippodrome + "]";
     }
 

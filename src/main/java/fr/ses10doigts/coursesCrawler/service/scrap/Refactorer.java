@@ -119,7 +119,7 @@ public class Refactorer implements Runnable {
 
 	    ///////////////////////////////////
 	    // Infos Course
-	    cc.setCourseID(course.getId());
+	    cc.setCourseID(course.getCourseID());
 	    cc.setDateCourse(course.getDate());
 	    cc.setNumeroReunion(course.getReunion());
 	    cc.setNumeroCourse(course.getCourse());
@@ -130,11 +130,11 @@ public class Refactorer implements Runnable {
 
 	    ////////////////////////////////////
 	    // Infos Rapport
-	    Set<Rapport> rapportsList = rapportRepository.findByCourseID(course.getId());
+	    Set<Rapport> rapportsList = rapportRepository.findByCourseID(course.getCourseID());
 
 
 	    if (rapportsList.size() == 0) {
-		logger.debug("Skip => Missing rapport for " + course.getId());
+		logger.debug("Skip => Missing rapport for " + course.getCourseID());
 		report.addSkipped(1);
 		continue;
 	    }
@@ -183,10 +183,10 @@ public class Refactorer implements Runnable {
 	    Cote cotePrCtDeuz = null;
 	    Cote cotePrCtTroiz = null;
 
-	    Set<Cote> cotesList = coteRepository.findByCourseID(course.getId());
+	    Set<Cote> cotesList = coteRepository.findByCourseID(course.getCourseID());
 
 	    if (cotesList.size() == 0) {
-		logger.debug("Skip => Missing cote for " + course.getId());
+		logger.debug("Skip => Missing cote for " + course.getCourseID());
 		report.addSkipped(1);
 		continue;
 	    }
@@ -339,10 +339,10 @@ public class Refactorer implements Runnable {
 
 	    ///////////////////////////
 	    // Arrivees
-	    Set<Arrivee> arrivees = arriveeRepository.findByCourseID(course.getId());
+	    Set<Arrivee> arrivees = arriveeRepository.findByCourseID(course.getCourseID());
 
 	    if (arrivees.isEmpty()) {
-		logger.debug("Skip => Missing arrivee for " + course.getId());
+		logger.debug("Skip => Missing arrivee for " + course.getCourseID());
 		report.addSkipped(1);
 		continue;
 	    }
@@ -376,10 +376,10 @@ public class Refactorer implements Runnable {
 	    int ageMin = 30;
 	    int ageMax = 0;
 
-	    Set<Partant> partantsListe = partantRepository.findByCourseID(course.getId());
+	    Set<Partant> partantsListe = partantRepository.findByCourseID(course.getCourseID());
 
 	    if (partantsListe.isEmpty()) {
-		logger.debug("Skip => Missing partant for " + course.getId());
+		logger.debug("Skip => Missing partant for " + course.getCourseID());
 		report.addSkipped(1);
 		continue;
 	    }
@@ -429,7 +429,7 @@ public class Refactorer implements Runnable {
 			}
 
 		    } catch (Exception e) {
-			String texte = "Pb parse Age (" + unPart.getAgeSexe() + "), course " + course.getId()
+			String texte = "Pb parse Age (" + unPart.getAgeSexe() + "), course " + course.getCourseID()
 			+ " : " + e.getMessage();
 			logger.error(texte);
 
@@ -459,7 +459,7 @@ public class Refactorer implements Runnable {
 	    // envoi BDD
 	    //repository.add(cc);
 	    computedBuffer.add(cc);
-	    logger.debug("Computed ok for courseID : " + course.getId());
+	    logger.debug("Computed ok for courseID : " + course.getCourseID());
 
 	    cc = null;
 

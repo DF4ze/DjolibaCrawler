@@ -2,47 +2,27 @@ package fr.ses10doigts.coursesCrawler.model.scrap.entity;
 
 import fr.ses10doigts.coursesCrawler.model.scrap.AbstractCourseEntity;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 
 @Entity
 public class Course extends AbstractCourseEntity {
 
-    @Id
-    private Long courseID;
-    private String date;
-    private String hippodrome;
+    private String  date;
+    private String  hippodrome;
     private Integer reunion;
     private Integer course;
-    private String prix;
-    private String type;
-    private String prime;
+    private String  prix;
+    private String  type;
+    private String  prime;
     private String depart;
 
     public Course() {
     }
 
     @Override
-    public Long getId() {
-	return courseID;
-    }
-    public void setId(Long id) {
-	this.courseID = id;
-    }
-
-    @Override
     public String toString() {
-	return "Course [courseID=" + courseID + ", date=" + date + ", hippodrome=" + hippodrome + ", reunion=" + reunion
-		+ ", course=" + course + ", prix=" + prix + ", type=" + type + ", prime=" + prime + ", depart=" + depart
-		+ "]";
-    }
-
-    @Override
-    public Long getCourseID() {
-	return courseID;
-    }
-    @Override
-    public void setCourseID(Long courseID) {
-	this.courseID = courseID;
+	return "Course [courseID=" + getCourseID() + ", date=" + date + ", hippodrome=" + hippodrome + ", reunion="
+		+ reunion + ", course=" + course + ", prix=" + prix + ", type=" + type + ", prime=" + prime
+		+ ", depart=" + depart + "]";
     }
 
     public String getDate() {

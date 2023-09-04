@@ -2,9 +2,6 @@ package fr.ses10doigts.coursesCrawler.model.scrap.entity;
 
 import fr.ses10doigts.coursesCrawler.model.scrap.AbstractCourseEntity;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
@@ -13,10 +10,6 @@ import jakarta.persistence.UniqueConstraint;
 public class Partant extends AbstractCourseEntity implements Cloneable{
 
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
-    private Long courseID;
     private Integer numCheval;
     private String nomCheval;
     private String ageSexe;
@@ -29,23 +22,6 @@ public class Partant extends AbstractCourseEntity implements Cloneable{
     public Partant() {
     }
 
-
-    @Override
-    public Long getId() {
-	return id;
-    }
-    public void setId(Long id) {
-	this.id = id;
-    }
-
-    @Override
-    public Long getCourseID() {
-	return courseID;
-    }
-    @Override
-    public void setCourseID(Long courseId) {
-	this.courseID = courseId;
-    }
 
 
     public Integer getNumCheval() {
@@ -119,9 +95,9 @@ public class Partant extends AbstractCourseEntity implements Cloneable{
 	Partant o = new Partant();
 
 	o.ageSexe = ageSexe;
-	o.courseID = courseID.longValue();
+	o.setCourseID(this.getCourseID());
 	o.gains = gains;
-	o.id = id.longValue();
+	o.setId(getId());
 	o.iGains = iGains.intValue();
 	o.musique = musique;
 	o.nomCheval = nomCheval;
@@ -134,7 +110,8 @@ public class Partant extends AbstractCourseEntity implements Cloneable{
 
     @Override
     public String toString() {
-	return "Partant [id=" + id + ", courseID=" + courseID + ", numCheval=" + numCheval + ", nomCheval=" + nomCheval
+	return "Partant [id=" + getId() + ", courseID=" + getCourseID() + ", numCheval=" + numCheval + ", nomCheval="
+		+ nomCheval
 		+ ", ageSexe=" + ageSexe + ", musique=" + musique + ", gains=" + gains + ", iGains=" + iGains + "]";
     }
 

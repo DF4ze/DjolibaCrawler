@@ -2,9 +2,6 @@ package fr.ses10doigts.coursesCrawler.model.scrap.entity;
 
 import fr.ses10doigts.coursesCrawler.model.scrap.AbstractCourseEntity;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
@@ -12,10 +9,7 @@ import jakarta.persistence.UniqueConstraint;
 @Table(uniqueConstraints=@UniqueConstraint(columnNames={"courseID", "numCheval"}))
 public class Cote extends AbstractCourseEntity {
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long    id;
-    private Long    courseID;
+
     private Integer numCheval;
     private Float   coteDepart;
     private Float   coteAvant;
@@ -26,23 +20,6 @@ public class Cote extends AbstractCourseEntity {
     public Cote() {
     }
 
-    @Override
-    public Long getId() {
-	return id;
-    }
-
-    public void setId(Long id) {
-	this.id = id;
-    }
-
-    @Override
-    public Long getCourseID() {
-	return courseID;
-    }
-    @Override
-    public void setCourseID(Long courseId) {
-	this.courseID = courseId;
-    }
 
     public Integer getNumCheval() {
 	return numCheval;
@@ -93,8 +70,9 @@ public class Cote extends AbstractCourseEntity {
 
     @Override
     public String toString() {
-	return "Cote [id=" + id + ", courseID=" + courseID + ", numCheval=" + numCheval + ", coteDepart=" + coteDepart
-		+ ", coteAvant=" + coteAvant + ", enjeuxDepart=" + enjeuxDepart + ", enjeuxAvant=" + enjeuxAvant + "]";
+	return "Cote [id=" + getId() + ", courseID=" + getCourseID() + ", numCheval=" + numCheval + ", coteDepart="
+		+ coteDepart + ", coteAvant=" + coteAvant + ", enjeuxDepart=" + enjeuxDepart + ", enjeuxAvant="
+		+ enjeuxAvant + "]";
     }
 
 
