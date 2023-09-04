@@ -1,4 +1,4 @@
-package fr.ses10doigts.coursesCrawler.service.course;
+package fr.ses10doigts.coursesCrawler.service.scrap;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,14 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import fr.ses10doigts.coursesCrawler.model.course.AbstractEntity;
-import fr.ses10doigts.coursesCrawler.model.course.EntitiesList;
 import fr.ses10doigts.coursesCrawler.model.course.entity.Arrivee;
 import fr.ses10doigts.coursesCrawler.model.course.entity.Cote;
 import fr.ses10doigts.coursesCrawler.model.course.entity.Course;
 import fr.ses10doigts.coursesCrawler.model.course.entity.CourseComplete;
 import fr.ses10doigts.coursesCrawler.model.course.entity.Partant;
 import fr.ses10doigts.coursesCrawler.model.course.entity.Rapport;
+import fr.ses10doigts.coursesCrawler.model.scrap.AbstractEntity;
+import fr.ses10doigts.coursesCrawler.model.scrap.EntitiesList;
 import fr.ses10doigts.coursesCrawler.repository.course.ArriveeRepository;
 import fr.ses10doigts.coursesCrawler.repository.course.CoteRepository;
 import fr.ses10doigts.coursesCrawler.repository.course.CourseCompleteRepository;

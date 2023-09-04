@@ -16,10 +16,10 @@ import fr.ses10doigts.coursesCrawler.CustomProperties;
 import fr.ses10doigts.coursesCrawler.model.crawl.Page;
 import fr.ses10doigts.coursesCrawler.model.crawl.enumerate.Agressivity;
 import fr.ses10doigts.coursesCrawler.repository.web.WebCrawlingProxy;
-import fr.ses10doigts.coursesCrawler.service.course.HtmlVisitor;
 import fr.ses10doigts.coursesCrawler.service.course.tool.Chrono;
 import fr.ses10doigts.coursesCrawler.service.crawl.tool.CrawlReport;
 import fr.ses10doigts.coursesCrawler.service.crawl.tool.PageTool;
+import fr.ses10doigts.coursesCrawler.service.scrap.HtmlVisitor;
 
 @Service
 public class ProcessorChain implements Runnable {

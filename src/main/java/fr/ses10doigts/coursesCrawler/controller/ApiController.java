@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.ses10doigts.coursesCrawler.model.crawl.Report;
 import fr.ses10doigts.coursesCrawler.model.crawl.Page;
-import fr.ses10doigts.coursesCrawler.service.course.RefactorerService;
 import fr.ses10doigts.coursesCrawler.service.crawl.CrawlService;
+import fr.ses10doigts.coursesCrawler.service.scrap.RefactorerService;
 
 @RestController
 public class ApiController {

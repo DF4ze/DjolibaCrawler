@@ -1,4 +1,4 @@
-package fr.ses10doigts.coursesCrawler.model.course;
+package fr.ses10doigts.coursesCrawler.model.scrap;
 
 import java.io.Serializable;
 

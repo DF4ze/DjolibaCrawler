@@ -1,6 +1,6 @@
 package fr.ses10doigts.coursesCrawler.model.course.entity;
 
-import fr.ses10doigts.coursesCrawler.model.course.AbstractCourseEntity;
+import fr.ses10doigts.coursesCrawler.model.scrap.AbstractCourseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 

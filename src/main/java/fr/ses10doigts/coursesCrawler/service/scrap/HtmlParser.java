@@ -1,6 +1,6 @@
-package fr.ses10doigts.coursesCrawler.service.course;
+package fr.ses10doigts.coursesCrawler.service.scrap;
 
-import fr.ses10doigts.coursesCrawler.model.course.EntitiesList;
+import fr.ses10doigts.coursesCrawler.model.scrap.EntitiesList;
 
 public interface HtmlParser {
 

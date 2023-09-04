@@ -1,4 +1,4 @@
-package fr.ses10doigts.coursesCrawler.service.course;
+package fr.ses10doigts.coursesCrawler.service.scrap;
 
 import java.lang.Thread.State;
 

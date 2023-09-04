@@ -9,8 +9,8 @@ import fr.ses10doigts.coursesCrawler.model.crawl.Report;
 import fr.ses10doigts.coursesCrawler.model.crawl.enumerate.FinalState;
 import fr.ses10doigts.coursesCrawler.model.crawl.enumerate.RunningState;
 import fr.ses10doigts.coursesCrawler.model.web.Configuration;
-import fr.ses10doigts.coursesCrawler.service.course.RefactorerService;
 import fr.ses10doigts.coursesCrawler.service.crawl.CrawlService;
+import fr.ses10doigts.coursesCrawler.service.scrap.RefactorerService;
 
 @Component
 public class LaunchService {
