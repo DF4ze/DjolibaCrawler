@@ -17,14 +17,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import fr.ses10doigts.coursesCrawler.model.course.entity.Arrivee;
-import fr.ses10doigts.coursesCrawler.model.course.entity.Cote;
-import fr.ses10doigts.coursesCrawler.model.course.entity.Course;
-import fr.ses10doigts.coursesCrawler.model.course.entity.Partant;
-import fr.ses10doigts.coursesCrawler.model.course.entity.Rapport;
 import fr.ses10doigts.coursesCrawler.model.scrap.AbstractEntity;
 import fr.ses10doigts.coursesCrawler.model.scrap.EntitiesList;
-import fr.ses10doigts.coursesCrawler.service.course.tool.XPathTool;
+import fr.ses10doigts.coursesCrawler.model.scrap.entity.Arrivee;
+import fr.ses10doigts.coursesCrawler.model.scrap.entity.Cote;
+import fr.ses10doigts.coursesCrawler.model.scrap.entity.Course;
+import fr.ses10doigts.coursesCrawler.model.scrap.entity.Partant;
+import fr.ses10doigts.coursesCrawler.model.scrap.entity.Rapport;
+import fr.ses10doigts.coursesCrawler.service.scrap.tool.XPathTool;
 
 @Component
 public class GenyParser implements HtmlParser{

@@ -7,7 +7,7 @@ SELECT distinct
 FROM courses.rapport 
 right join courses.course on course.courseid = rapport.courseid
 left join courses.arrivee on arrivee.courseid = course.courseid
-left join courses.cote on cote.courseid = courusersusersse.courseid
+left join courses.cote on cote.courseid = course.courseid
 left join courses.partant on partant.courseid = course.courseid
 ;
 -- where course.courseid is null;

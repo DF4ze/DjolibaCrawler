@@ -1,4 +1,4 @@
-package fr.ses10doigts.coursesCrawler.service.course.tool;
+package fr.ses10doigts.coursesCrawler.service.scrap.tool;
 
 public class RefactorerReport {
 

@@ -12,20 +12,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.ses10doigts.coursesCrawler.model.course.entity.Arrivee;
-import fr.ses10doigts.coursesCrawler.model.course.entity.Cote;
-import fr.ses10doigts.coursesCrawler.model.course.entity.Course;
-import fr.ses10doigts.coursesCrawler.model.course.entity.CourseComplete;
-import fr.ses10doigts.coursesCrawler.model.course.entity.Partant;
-import fr.ses10doigts.coursesCrawler.model.course.entity.Rapport;
 import fr.ses10doigts.coursesCrawler.model.scrap.AbstractEntity;
+import fr.ses10doigts.coursesCrawler.model.scrap.entity.Arrivee;
+import fr.ses10doigts.coursesCrawler.model.scrap.entity.Cote;
+import fr.ses10doigts.coursesCrawler.model.scrap.entity.Course;
+import fr.ses10doigts.coursesCrawler.model.scrap.entity.CourseComplete;
+import fr.ses10doigts.coursesCrawler.model.scrap.entity.Partant;
+import fr.ses10doigts.coursesCrawler.model.scrap.entity.Rapport;
 import fr.ses10doigts.coursesCrawler.repository.course.ArriveeRepository;
 import fr.ses10doigts.coursesCrawler.repository.course.CoteRepository;
 import fr.ses10doigts.coursesCrawler.repository.course.CourseRepository;
 import fr.ses10doigts.coursesCrawler.repository.course.PartantRepository;
 import fr.ses10doigts.coursesCrawler.repository.course.RapportRepository;
-import fr.ses10doigts.coursesCrawler.service.course.tool.Chrono;
-import fr.ses10doigts.coursesCrawler.service.course.tool.RefactorerReport;
+import fr.ses10doigts.coursesCrawler.service.scrap.tool.Chrono;
+import fr.ses10doigts.coursesCrawler.service.scrap.tool.RefactorerReport;
 
 @Component
 public class Refactorer implements Runnable {

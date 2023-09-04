@@ -4,7 +4,7 @@ import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import fr.ses10doigts.coursesCrawler.model.course.entity.Rapport;
+import fr.ses10doigts.coursesCrawler.model.scrap.entity.Rapport;
 
 public interface RapportRepository extends JpaRepository<Rapport, Long> {
 

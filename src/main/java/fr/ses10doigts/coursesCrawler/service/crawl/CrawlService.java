@@ -14,9 +14,9 @@ import fr.ses10doigts.coursesCrawler.model.crawl.Report;
 import fr.ses10doigts.coursesCrawler.model.crawl.enumerate.FinalState;
 import fr.ses10doigts.coursesCrawler.model.crawl.enumerate.RunningState;
 import fr.ses10doigts.coursesCrawler.repository.web.WebCrawlingProxy;
-import fr.ses10doigts.coursesCrawler.service.course.tool.Chrono;
 import fr.ses10doigts.coursesCrawler.service.crawl.tool.CrawlReport;
 import fr.ses10doigts.coursesCrawler.service.crawl.tool.LineReader;
+import fr.ses10doigts.coursesCrawler.service.scrap.tool.Chrono;
 
 @Service
 public class CrawlService {

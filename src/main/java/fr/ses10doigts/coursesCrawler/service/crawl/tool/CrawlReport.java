@@ -10,7 +10,7 @@ import fr.ses10doigts.coursesCrawler.model.crawl.PageReport;
 import fr.ses10doigts.coursesCrawler.model.crawl.enumerate.ChainState;
 import fr.ses10doigts.coursesCrawler.model.crawl.enumerate.FinalState;
 import fr.ses10doigts.coursesCrawler.model.crawl.enumerate.RunningState;
-import fr.ses10doigts.coursesCrawler.service.course.tool.Chrono;
+import fr.ses10doigts.coursesCrawler.service.scrap.tool.Chrono;
 
 public class CrawlReport {
     private static Map<String, PageReport> urlsReport = new HashMap<>();

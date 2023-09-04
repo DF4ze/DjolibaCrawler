@@ -4,7 +4,7 @@ import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import fr.ses10doigts.coursesCrawler.model.course.entity.Partant;
+import fr.ses10doigts.coursesCrawler.model.scrap.entity.Partant;
 
 public interface PartantRepository extends JpaRepository<Partant, Long> {
 

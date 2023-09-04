@@ -4,7 +4,7 @@ import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import fr.ses10doigts.coursesCrawler.model.course.entity.Arrivee;
+import fr.ses10doigts.coursesCrawler.model.scrap.entity.Arrivee;
 
 public interface ArriveeRepository extends JpaRepository<Arrivee, Long>{
 

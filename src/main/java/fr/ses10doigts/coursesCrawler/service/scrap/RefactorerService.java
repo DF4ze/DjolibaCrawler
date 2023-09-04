@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 import fr.ses10doigts.coursesCrawler.model.crawl.Report;
 import fr.ses10doigts.coursesCrawler.model.crawl.enumerate.FinalState;
 import fr.ses10doigts.coursesCrawler.model.crawl.enumerate.RunningState;
-import fr.ses10doigts.coursesCrawler.service.course.tool.Chrono;
-import fr.ses10doigts.coursesCrawler.service.course.tool.RefactorerReport;
+import fr.ses10doigts.coursesCrawler.service.scrap.tool.Chrono;
+import fr.ses10doigts.coursesCrawler.service.scrap.tool.RefactorerReport;
 
 @Component
 public class RefactorerService {
