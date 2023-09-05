@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
@@ -15,6 +16,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.ses10doigts.coursesCrawler.model.scrap.AbstractEntity;
@@ -24,6 +26,7 @@ import fr.ses10doigts.coursesCrawler.model.scrap.entity.Cote;
 import fr.ses10doigts.coursesCrawler.model.scrap.entity.Course;
 import fr.ses10doigts.coursesCrawler.model.scrap.entity.Partant;
 import fr.ses10doigts.coursesCrawler.model.scrap.entity.Rapport;
+import fr.ses10doigts.coursesCrawler.repository.course.CourseRepository;
 import fr.ses10doigts.coursesCrawler.service.scrap.tool.XPathTool;
 
 @Component
@@ -33,6 +36,9 @@ public class GenyParser implements HtmlParser{
     private String body;
     private Document doc;
     private XPathTool xPathTool;
+
+    @Autowired
+    private CourseRepository	courseRepository;
 
     private static final Logger	logger = LoggerFactory.getLogger(GenyParser.class);
 
@@ -124,6 +130,13 @@ public class GenyParser implements HtmlParser{
 	logger.info(url);
 
 	Long longCourse = parse_numCourse();
+	EntitiesList bl = null;
+	List<Course> findByCourseID = courseRepository.findByCourseID(longCourse);
+	// si la course a déjà été parsée on ne la renseigne pas de nouveau pour éviter
+	// les doublons
+	if (!findByCourseID.isEmpty()) {
+	    return bl;
+	}
 
 	// extraction de l'ID de la date
 	Pattern p = Pattern.compile(".*([0-9]{4}-[0-9]{2}-[0-9]{2})-.*");
@@ -293,7 +306,7 @@ public class GenyParser implements HtmlParser{
 	    course.setDepart(depart);
 	    course.setUrl(url);
 	}
-	EntitiesList bl = null;
+
 	if( course != null){
 	    bl = new EntitiesList();
 	    bl.add(course);

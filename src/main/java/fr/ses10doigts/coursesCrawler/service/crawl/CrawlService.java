@@ -123,4 +123,8 @@ public class CrawlService {
 	return treatment;
     }
 
+    public boolean testConnectivity() {
+	return webService.connectivityTest();
+    }
+
 }

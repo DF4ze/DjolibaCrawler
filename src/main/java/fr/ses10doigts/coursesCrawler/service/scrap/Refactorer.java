@@ -91,15 +91,12 @@ public class Refactorer implements Runnable {
 	List<Course> coursesList = null;
 
 	int stepDone = 0;
-	// long lastCourse = from;
 
 	Chrono stepChrono = new Chrono();
 
-	//	while (stepDone != 0) {
-	//	    stepDone = 0;
+
 	stepChrono.pick();
 
-	// from = lastCourse;
 	Collection<AbstractEntity> computedBuffer = new ArrayList<>();
 	if (from != null) {
 	    logger.info("Starting from id " + from);
@@ -228,7 +225,7 @@ public class Refactorer implements Runnable {
 		    coteFavPreum = uneCote;
 		} else {
 
-		    if (coteFavPreum.getCoteDepart() > uneCote.getCoteDepart()) {
+		    if (coteFavPreum.getCoteDepart() < uneCote.getCoteDepart()) {
 			coteFavTroiz = coteFavDeuz;
 			coteFavDeuz = coteFavPreum;
 			coteFavPreum = uneCote;
@@ -237,14 +234,11 @@ public class Refactorer implements Runnable {
 			coteFavDeuz = uneCote;
 
 		    } else {
-			if (coteFavDeuz.getCoteDepart() > uneCote.getCoteDepart()) {
+			if (coteFavDeuz.getCoteDepart() < uneCote.getCoteDepart()) {
 			    coteFavTroiz = coteFavDeuz;
 			    coteFavDeuz = uneCote;
 
-			} else if (coteFavTroiz == null) {
-			    coteFavTroiz = uneCote;
-
-			} else if (coteFavTroiz.getCoteDepart() > uneCote.getCoteDepart()) {
+			} else if (coteFavTroiz == null || coteFavTroiz.getCoteDepart() < uneCote.getCoteDepart()) {
 			    coteFavTroiz = uneCote;
 			}
 		    }
@@ -294,6 +288,10 @@ public class Refactorer implements Runnable {
 		cc.setNumeroTroisiemeFavori(coteFavTroiz.getNumCheval());
 
 	    }
+
+	    cc.setCotePremierFavoris((coteFavPreum == null ? null : coteFavPreum.getCoteDepart()));
+	    cc.setCoteDeuxiemeFavoris((coteFavDeuz == null ? null : coteFavDeuz.getCoteDepart()));
+	    cc.setCoteTroisiemeFavoris((coteFavTroiz == null ? null : coteFavTroiz.getCoteDepart()));
 
 	    cc.setPourcentPremierFavori((cotePrCtPreum == null ? null : cotePrCtPreum.getEnjeuxDepart()));
 	    cc.setPourcentDeuxiemeFavori((cotePrCtDeuz == null ? null : cotePrCtDeuz.getEnjeuxDepart()));
@@ -346,6 +344,11 @@ public class Refactorer implements Runnable {
 		report.addSkipped(1);
 		continue;
 	    }
+
+	    // Récupération de l'URL depuis une arrivée
+	    Object[] array = arrivees.toArray();
+	    Arrivee uneArrivee = (Arrivee) array[0];
+	    cc.setUrl(uneArrivee.getUrl());
 
 	    Map<Integer, String> resultats = getNomFromPlace(arrivees);
 
@@ -481,7 +484,7 @@ public class Refactorer implements Runnable {
 	logger.info("Computed saved");
 	long time = stepChrono.compare();
 
-	logger.debug(stepDone + " records in " + (time / cycleStep) + "ms / step");
+	logger.info(stepDone + " records in " + (time / cycleStep) + "ms / step");
 	report.setTime(time);
 	report.stopRefacto();
 

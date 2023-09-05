@@ -84,9 +84,10 @@ public class ProcessorChain implements Runnable {
 		+ "- agressivity : "+agressivity);
 	// @formatter:on
 
-
 	do {
 	    for (Page page = null; (page = enQueued.poll()) != null;) {
+
+
 		// Retrieve inner-links
 		downloadAndSeek(page);
 	    }
@@ -149,8 +150,11 @@ public class ProcessorChain implements Runnable {
 	} catch (RestClientException e) {
 	    logger.error("RestClientException on page " + page.getUrl());
 	    report.errorCrawl(page.getUrl());
-
 	    setAsCrawlErrorPage(page);
+
+	    // Launching a connectivity test to know if we still have Internet
+	    // ... and wait if not
+	    webRepo.connectivityTest();
 	}
 
 

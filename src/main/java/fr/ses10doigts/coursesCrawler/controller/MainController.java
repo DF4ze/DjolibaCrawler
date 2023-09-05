@@ -15,6 +15,7 @@ import fr.ses10doigts.coursesCrawler.model.web.Configuration;
 import fr.ses10doigts.coursesCrawler.service.crawl.CrawlService;
 import fr.ses10doigts.coursesCrawler.service.scrap.RefactorerService;
 import fr.ses10doigts.coursesCrawler.service.web.ConfigurationService;
+import fr.ses10doigts.coursesCrawler.service.web.ExcelExtractorService;
 import fr.ses10doigts.coursesCrawler.service.web.LaunchService;
 
 
@@ -22,13 +23,15 @@ import fr.ses10doigts.coursesCrawler.service.web.LaunchService;
 public class MainController {
 
     @Autowired
-    private ConfigurationService configurationService;
+    private ConfigurationService  configurationService;
     @Autowired
-    private CrawlService	 crawlService;
+    private CrawlService	  crawlService;
     @Autowired
-    private RefactorerService	 refactoService;
+    private RefactorerService	  refactoService;
     @Autowired
-    private LaunchService	 launcher;
+    private LaunchService	  launcher;
+    @Autowired
+    private ExcelExtractorService excelService;
 
     private static final Logger	 logger	= LoggerFactory.getLogger(MainController.class);
 
@@ -39,6 +42,18 @@ public class MainController {
 	model.addAttribute("refactReport", refactoService.getReportCurrentRefact());
 
 	return "home";
+    }
+
+    @GetMapping("/generate")
+    public String generateXls(Model model) {
+
+	excelService.extractCourseCompletes();
+
+	model.addAttribute("configuration", configurationService.getConfiguration());
+	model.addAttribute("crawlReport", crawlService.getReportCurrentCrawl());
+	model.addAttribute("refactReport", refactoService.getReportCurrentRefact());
+
+	return "redirect:/";
     }
 
     @PostMapping(value = "/", params = "action=save")
@@ -70,6 +85,20 @@ public class MainController {
 
 	crawlService.stopCurrentCrawl();
 	refactoService.stopRefactorer();
+
+	ModelAndView mav = new ModelAndView("home");
+	mav.addObject("configuration", configurationService.getConfiguration());
+	mav.addObject("crawlReport", crawlService.getReportCurrentCrawl());
+	mav.addObject("refactReport", refactoService.getReportCurrentRefact());
+
+	return mav;
+    }
+
+    @PostMapping(value = "/", params = "action=test")
+    public ModelAndView test() {
+	logger.info("Testing connectivity ");
+
+	crawlService.testConnectivity();
 
 	ModelAndView mav = new ModelAndView("home");
 	mav.addObject("configuration", configurationService.getConfiguration());
