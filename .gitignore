@@ -55,3 +55,6 @@ build/
 *.tar.gz
 *.gz
 *.rar
+
+# Bin Files #
+*.xls*
