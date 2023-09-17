@@ -118,7 +118,7 @@ public class ExcelExtractorService {
     }
 
     private Workbook feedFromDB(Workbook workbook) {
-	List<CourseComplete> findAll = ccRepo.findAll();
+	List<CourseComplete> findAll = ccRepo.findAllOrderByDateCourse();
 
 	CellStyle style = workbook.createCellStyle();
 	style.setWrapText(true);
