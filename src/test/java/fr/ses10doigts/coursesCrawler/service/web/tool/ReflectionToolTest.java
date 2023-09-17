@@ -6,7 +6,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import fr.ses10doigts.coursesCrawler.model.scrap.entity.CourseComplete;
+import fr.ses10doigts.djolibaCrawler.model.scrap.entity.CourseComplete;
+import fr.ses10doigts.djolibaCrawler.service.web.tool.ReflectionTool;
 import jakarta.annotation.Generated;
 
 @Generated(value = "org.junit-tools-1.1.0")

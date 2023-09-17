@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>fr.ses10doigts</groupId>
-	<artifactId>CoursesCrawler</artifactId>
+	<artifactId>DjolibaCrawler</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>CoursesCrawler</name>
+	<name>DjolibaCrawler</name>
 	<description>Change money concience</description>
 	<properties>
 		<java.version>17</java.version>

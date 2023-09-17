@@ -7,7 +7,8 @@ import java.util.Queue;
 
 import org.junit.jupiter.api.Test;
 
-import fr.ses10doigts.coursesCrawler.model.crawl.Page;
+import fr.ses10doigts.djolibaCrawler.model.crawl.Page;
+import fr.ses10doigts.djolibaCrawler.service.crawl.tool.PagesContainer;
 import jakarta.annotation.Generated;
 
 @Generated(value = "org.junit-tools-1.1.0")
