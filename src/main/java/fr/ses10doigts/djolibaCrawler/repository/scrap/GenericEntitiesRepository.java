@@ -1,4 +1,4 @@
-package fr.ses10doigts.djolibaCrawler.repository.course;
+package fr.ses10doigts.djolibaCrawler.repository.scrap;
 
 import java.io.Serializable;
 

@@ -7,15 +7,12 @@ import org.springframework.web.bind.annotation.RestController;
 import fr.ses10doigts.djolibaCrawler.model.crawl.Page;
 import fr.ses10doigts.djolibaCrawler.model.crawl.Report;
 import fr.ses10doigts.djolibaCrawler.service.crawl.CrawlService;
-import fr.ses10doigts.djolibaCrawler.service.scrap.RefactorerService;
 
 @RestController
 public class ApiController {
 
     @Autowired
     private CrawlService crawlService;
-    @Autowired
-    private RefactorerService refactoService;
 
 
 
@@ -34,7 +31,7 @@ public class ApiController {
 
     @GetMapping("/launchRefacto")
     public void launchRefacto() {
-	refactoService.launchRefactorer();
+	//	refactoService.launchRefactorer();
     }
 
     public void refactorer() {

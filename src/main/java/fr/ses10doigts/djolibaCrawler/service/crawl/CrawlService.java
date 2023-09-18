@@ -21,7 +21,7 @@ import fr.ses10doigts.djolibaCrawler.service.scrap.tool.Chrono;
 @Service
 public class CrawlService {
     @Autowired
-    private WebCrawlingProxy webService;
+    private WebCrawlingProxy	webService;
 
     @Autowired
     private LineReader		reader;

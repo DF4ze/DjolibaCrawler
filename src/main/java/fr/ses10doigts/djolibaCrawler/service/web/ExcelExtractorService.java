@@ -21,7 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.ses10doigts.djolibaCrawler.model.scrap.entity.CourseComplete;
-import fr.ses10doigts.djolibaCrawler.repository.course.CourseCompleteRepository;
+import fr.ses10doigts.djolibaCrawler.repository.scrap.CourseCompleteRepository;
 import fr.ses10doigts.djolibaCrawler.service.web.tool.ReflectionTool;
 
 @Component

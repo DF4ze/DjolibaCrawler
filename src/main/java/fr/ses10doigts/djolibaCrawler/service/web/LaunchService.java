@@ -10,7 +10,6 @@ import fr.ses10doigts.djolibaCrawler.model.crawl.enumerate.FinalState;
 import fr.ses10doigts.djolibaCrawler.model.crawl.enumerate.RunningState;
 import fr.ses10doigts.djolibaCrawler.model.web.Configuration;
 import fr.ses10doigts.djolibaCrawler.service.crawl.CrawlService;
-import fr.ses10doigts.djolibaCrawler.service.scrap.RefactorerService;
 
 @Component
 public class LaunchService {
@@ -19,8 +18,6 @@ public class LaunchService {
     private ConfigurationService conf;
     @Autowired
     private CrawlService	 crawl;
-    @Autowired
-    private RefactorerService	 refacto;
 
     public Report manageLaunch() {
 	Configuration configuration = conf.getConfiguration();
@@ -33,11 +30,7 @@ public class LaunchService {
 		t = crawl.getTreatment();
 	    }
 
-	    if (configuration.isLaunchRefacto()) {
-		// TODO rapport
-		refacto.launchRefactorer(t);
 
-	    }
 	} catch (IOException e) {
 
 	    cr.setFinalState(FinalState.ERROR);

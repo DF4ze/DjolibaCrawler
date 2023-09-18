@@ -13,9 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import fr.ses10doigts.djolibaCrawler.model.crawl.Report;
 import fr.ses10doigts.djolibaCrawler.model.web.Configuration;
 import fr.ses10doigts.djolibaCrawler.service.crawl.CrawlService;
-import fr.ses10doigts.djolibaCrawler.service.scrap.RefactorerService;
 import fr.ses10doigts.djolibaCrawler.service.web.ConfigurationService;
-import fr.ses10doigts.djolibaCrawler.service.web.ExcelExtractorService;
 import fr.ses10doigts.djolibaCrawler.service.web.LaunchService;
 
 
@@ -27,11 +25,7 @@ public class MainController {
     @Autowired
     private CrawlService	  crawlService;
     @Autowired
-    private RefactorerService	  refactoService;
-    @Autowired
     private LaunchService	  launcher;
-    @Autowired
-    private ExcelExtractorService excelService;
 
     private static final Logger	 logger	= LoggerFactory.getLogger(MainController.class);
 
@@ -39,7 +33,7 @@ public class MainController {
     public String home(Model model) {
 	model.addAttribute("configuration", configurationService.getConfiguration());
 	model.addAttribute("crawlReport", crawlService.getReportCurrentCrawl());
-	model.addAttribute("refactReport", refactoService.getReportCurrentRefact());
+	model.addAttribute("refactReport", null);
 
 	return "home";
     }
@@ -47,11 +41,11 @@ public class MainController {
     @GetMapping("/generate")
     public String generateXls(Model model) {
 
-	excelService.extractCourseCompletes();
+	//	excelService.extractCourseCompletes();
 
 	model.addAttribute("configuration", configurationService.getConfiguration());
 	model.addAttribute("crawlReport", crawlService.getReportCurrentCrawl());
-	model.addAttribute("refactReport", refactoService.getReportCurrentRefact());
+	model.addAttribute("refactReport", null);
 
 	return "redirect:/";
     }
@@ -74,7 +68,7 @@ public class MainController {
 	ModelAndView mav = new ModelAndView("home");
 	mav.addObject("configuration", configurationService.getConfiguration());
 	mav.addObject("crawlReport", crawlReport);
-	mav.addObject("refactReport", refactoService.getReportCurrentRefact());
+	mav.addObject("refactReport", null);
 
 	return mav;
     }
@@ -84,12 +78,11 @@ public class MainController {
 	logger.info("User ask to stop ");
 
 	crawlService.stopCurrentCrawl();
-	refactoService.stopRefactorer();
 
 	ModelAndView mav = new ModelAndView("home");
 	mav.addObject("configuration", configurationService.getConfiguration());
 	mav.addObject("crawlReport", crawlService.getReportCurrentCrawl());
-	mav.addObject("refactReport", refactoService.getReportCurrentRefact());
+	mav.addObject("refactReport", null);
 
 	return mav;
     }
@@ -103,7 +96,7 @@ public class MainController {
 	ModelAndView mav = new ModelAndView("home");
 	mav.addObject("configuration", configurationService.getConfiguration());
 	mav.addObject("crawlReport", crawlService.getReportCurrentCrawl());
-	mav.addObject("refactReport", refactoService.getReportCurrentRefact());
+	mav.addObject("refactReport", null);
 
 	return mav;
     }
@@ -121,7 +114,7 @@ public class MainController {
 	ModelAndView mav = new ModelAndView("home");
 	mav.addObject("configuration", dto);
 	mav.addObject("crawlReport", crawlService.getReportCurrentCrawl());
-	mav.addObject("refactReport", refactoService.getReportCurrentRefact());
+	mav.addObject("refactReport", null);
 
 	return mav;
     }
