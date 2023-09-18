@@ -1,14 +1,14 @@
-$(function () {
-    // ACTIVATION DU DATEPICKER 
-    $('.datepicker').datepicker({
-        clearBtn: true,
-        format: "dd/mm/yyyy"
-    });
-});
-
-$('.datepicker').on('changeDate', function(ev){
-    $(this).datepicker('hide');
-});
+//$(function () {
+//    // ACTIVATION DU DATEPICKER 
+//    $('.datepicker').datepicker({
+//        clearBtn: true,
+//        format: "dd/mm/yyyy"
+//    });
+//});
+//
+//$('.datepicker').on('changeDate', function(ev){
+//    $(this).datepicker('hide');
+//});
 
 
 
@@ -38,4 +38,27 @@ function includeHTML() {
       return;
     }
   }
+}
+
+
+
+function changeTableFilters( animal, frameSize, frameWood) {
+	$.ajax({
+		type : "POST",
+		url : "changeTableFilters",
+		data : {
+			"animal" : animal,
+			"frameSize" : frameSize,
+			"frameWood" : frameWood
+		},
+		success : function(result) {
+			if (result == true) {
+				
+			} 
+		},
+		error : function(e) {
+			$("#getResultDiv").html("<strong>Error</strong>");
+			console.log("ERROR: ", e);
+		}
+	});
 }

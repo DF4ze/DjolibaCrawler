@@ -19,7 +19,7 @@ public class Frame extends AbstractPageEntity {
     private Integer	sizeCm;
     private FrameFormat	format;
     private WoodType	woodType;
-    private Boolean	disponibility;
+    private Boolean	available;
     private Double	price;
     private String	sku;
 }

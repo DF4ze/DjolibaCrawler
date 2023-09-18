@@ -28,7 +28,7 @@
 		<dependency>
         	<groupId>org.projectlombok</groupId>
         	<artifactId>lombok</artifactId>
-        	<version>0.9.2</version>
+        	<version>1.18.28</version>
     	</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -89,6 +89,36 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-compiler-plugin</artifactId>
+			    <version>3.10.1</version>
+			    <configuration>
+			        <source>16</source>
+			        <target>16</target>
+			        <fork>true</fork>
+			        <compilerArgs>
+			            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED</arg>
+			            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED</arg>
+			            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</arg>
+			            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED</arg>
+			            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
+			            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED</arg>
+			            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>
+			            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</arg>
+			            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
+			            <arg>-J--add-opens=jdk.compiler/com.sun.tools.javac.jvm=ALL-UNNAMED</arg>
+			        </compilerArgs>
+			        <annotationProcessorPaths>
+			            <path>
+			                <groupId>org.projectlombok</groupId>
+			                <artifactId>lombok</artifactId>
+			                <version>1.18.16</version>
+			            </path>
+			        </annotationProcessorPaths>
+			    </configuration>
 			</plugin>
 		</plugins>
 	</build>

@@ -40,8 +40,10 @@ public class LineReader {
 	return filePath;
     }
 
-    public void setFilePath(String filePath) {
+    public boolean setFilePath(String filePath) {
 	this.filePath = filePath;
+	Path path = Paths.get(filePath);
+	return path.toFile().exists();
     }
 
 }

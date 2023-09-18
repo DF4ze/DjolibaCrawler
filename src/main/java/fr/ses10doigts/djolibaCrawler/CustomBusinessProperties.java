@@ -1,4 +1,4 @@
-package fr.ses10doigts.djolibaCrawler.service;
+package fr.ses10doigts.djolibaCrawler;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -14,5 +14,9 @@ public class CustomBusinessProperties {
     private Integer moSkin;
     private Integer moBuild;
     private Integer marge;
+
+    private String  confPath;
+
+    private Integer SkinBorder;
 }
 

@@ -10,7 +10,7 @@ public class Drum {
     private Skin    skin;
     private Frame   frame;
 
-    private Boolean fonctionnal;
+    private Boolean available;
     private Long    nbFrameInSkin;
     private Boolean skinRope;
 

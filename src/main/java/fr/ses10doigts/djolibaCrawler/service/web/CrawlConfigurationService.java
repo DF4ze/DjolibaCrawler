@@ -18,7 +18,7 @@ import fr.ses10doigts.djolibaCrawler.service.crawl.tool.LineReader;
 import fr.ses10doigts.djolibaCrawler.service.crawl.tool.LineWriter;
 
 @Component
-public class ConfigurationService {
+public class CrawlConfigurationService {
     @Autowired
     private LineReader	     reader;
     @Autowired
@@ -26,12 +26,12 @@ public class ConfigurationService {
     @Autowired
     private CustomCrawlProperties props;
 
-    private static final Logger	logger = LoggerFactory.getLogger(ConfigurationService.class);
+    private static final Logger	logger = LoggerFactory.getLogger(CrawlConfigurationService.class);
     private static final DateFormat urlDateFormat    = new SimpleDateFormat("yyyy-MM-dd");
     private static final DateFormat writenDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 
-    public CrawlConfiguration getConfiguration() {
+    public CrawlConfiguration getCrawlConfiguration() {
 	CrawlConfiguration conf = new CrawlConfiguration();
 
 	conf.setAgressivity(props.getAgressivity());

@@ -15,12 +15,12 @@ import fr.ses10doigts.djolibaCrawler.service.crawl.CrawlService;
 public class LaunchService {
 
     @Autowired
-    private ConfigurationService conf;
+    private CrawlConfigurationService conf;
     @Autowired
     private CrawlService	 crawl;
 
     public Report manageLaunch() {
-	CrawlConfiguration configuration = conf.getConfiguration();
+	CrawlConfiguration configuration = conf.getCrawlConfiguration();
 
 	Report cr = new Report();
 	try {

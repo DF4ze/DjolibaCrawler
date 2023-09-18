@@ -1,5 +1,9 @@
 package fr.ses10doigts.djolibaCrawler.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +14,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import fr.ses10doigts.djolibaCrawler.model.business.Drum;
 import fr.ses10doigts.djolibaCrawler.model.crawl.Report;
+import fr.ses10doigts.djolibaCrawler.model.scrap.entity.Skin;
 import fr.ses10doigts.djolibaCrawler.model.web.CrawlConfiguration;
+import fr.ses10doigts.djolibaCrawler.model.web.MainTableFiltersDTO;
+import fr.ses10doigts.djolibaCrawler.service.business.BusinessConfigurationService;
+import fr.ses10doigts.djolibaCrawler.service.business.BusinessService;
 import fr.ses10doigts.djolibaCrawler.service.crawl.CrawlService;
-import fr.ses10doigts.djolibaCrawler.service.web.ConfigurationService;
+import fr.ses10doigts.djolibaCrawler.service.web.CrawlConfigurationService;
 import fr.ses10doigts.djolibaCrawler.service.web.LaunchService;
 
 
@@ -21,23 +30,68 @@ import fr.ses10doigts.djolibaCrawler.service.web.LaunchService;
 public class MainController {
 
     @Autowired
-    private ConfigurationService  configurationService;
+    private CrawlConfigurationService	 crawlConfigurationService;
     @Autowired
-    private CrawlService	  crawlService;
+    private BusinessConfigurationService businessConfigurationService;
     @Autowired
-    private LaunchService	  launcher;
+    private BusinessService		 businessService;
+    @Autowired
+    private CrawlService		 crawlService;
+    @Autowired
+    private LaunchService		 launcher;
 
-    private static final Logger	 logger	= LoggerFactory.getLogger(MainController.class);
+    private static final Logger		 logger	= LoggerFactory.getLogger(MainController.class);
 
     @GetMapping("/")
     public String home(Model model) {
 
+	model.addAttribute("businessConf", businessConfigurationService.getBusinessConfiguration());
+	model.addAttribute("skinList", businessService.getAllActivSkins(null, null));
+	model.addAttribute("frameList", businessService.getAllActivFrames(null, null, null));
+
+	model.addAttribute("animals", businessService.getDistinctAnimal(null, null));
+	model.addAttribute("frameSizes", businessService.getDistinctFrameSize(null, null, null));
+	model.addAttribute("frameWoods", businessService.getDistinctFrameWood());
+
 	return "home";
+    }
+
+    @GetMapping("/mainTable")
+    public String mainTable(Model model) {
+	List<Skin> allActivSkins = businessService.getAllActivSkins(null, null);
+	List<Integer> distinctFrameSize = businessService.getDistinctFrameSize(null, null, null);
+	Map<String, List<Drum>> result = businessService.buildDrumsFromFilters(null, null, null, null);
+
+	model.addAttribute("skinList", allActivSkins);
+	model.addAttribute("frameSizes", distinctFrameSize);
+	model.addAttribute("mainTable", result);
+
+	return "mainTable";
+    }
+
+    @PostMapping("/changeTableFilters")
+    public ModelAndView changeFiltersMainTable(@ModelAttribute MainTableFiltersDTO dto) {
+	logger.debug("User change filters: " + dto);
+
+	List<Skin> allActivSkins = businessService.getAllActivSkins(dto.getAnimal(), dto.getAvalaible());
+	List<Integer> distinctFrameSize = businessService.getDistinctFrameSize(dto.getFrameSize(), dto.getFrameWood(),
+		dto.getAvalaible());
+
+	Map<String, List<Drum>> result = businessService.buildDrumsFromFilters(dto.getAnimal(), dto.getFrameSize(),
+		dto.getFrameWood(), dto.getAvalaible());
+
+	ModelAndView mav = new ModelAndView("mainTable");
+	mav.addObject("mainTable", new HashMap<>());
+	mav.addObject("skinList", allActivSkins);
+	mav.addObject("frameSizes", distinctFrameSize);
+	mav.addObject("mainTable", result);
+
+	return mav;
     }
 
     @GetMapping("/crawl")
     public String crawl(Model model) {
-	model.addAttribute("configuration", configurationService.getConfiguration());
+	model.addAttribute("configuration", crawlConfigurationService.getCrawlConfiguration());
 	model.addAttribute("crawlReport", crawlService.getReportCurrentCrawl());
 	model.addAttribute("refactReport", null);
 
@@ -49,7 +103,7 @@ public class MainController {
 
 	//	excelService.extractCourseCompletes();
 
-	model.addAttribute("configuration", configurationService.getConfiguration());
+	model.addAttribute("configuration", crawlConfigurationService.getCrawlConfiguration());
 	model.addAttribute("crawlReport", crawlService.getReportCurrentCrawl());
 	model.addAttribute("refactReport", null);
 
@@ -60,7 +114,7 @@ public class MainController {
     public ModelAndView saveConfig(@ModelAttribute CrawlConfiguration dto) {
 	logger.info("User ask to save config : " + dto);
 
-	configurationService.saveConfiguration(dto);
+	crawlConfigurationService.saveConfiguration(dto);
 	return new ModelAndView("redirect:/");
     }
 
@@ -68,11 +122,11 @@ public class MainController {
     public ModelAndView launchCrawl(@ModelAttribute CrawlConfiguration dto) {
 	logger.info("User ask to launch with config : " + dto);
 
-	configurationService.saveConfiguration(dto);
+	crawlConfigurationService.saveConfiguration(dto);
 	Report crawlReport = launcher.manageLaunch();
 
 	ModelAndView mav = new ModelAndView("home");
-	mav.addObject("configuration", configurationService.getConfiguration());
+	mav.addObject("configuration", crawlConfigurationService.getCrawlConfiguration());
 	mav.addObject("crawlReport", crawlReport);
 	mav.addObject("refactReport", null);
 
@@ -86,7 +140,7 @@ public class MainController {
 	crawlService.stopCurrentCrawl();
 
 	ModelAndView mav = new ModelAndView("home");
-	mav.addObject("configuration", configurationService.getConfiguration());
+	mav.addObject("configuration", crawlConfigurationService.getCrawlConfiguration());
 	mav.addObject("crawlReport", crawlService.getReportCurrentCrawl());
 	mav.addObject("refactReport", null);
 
@@ -100,7 +154,7 @@ public class MainController {
 	crawlService.testConnectivity();
 
 	ModelAndView mav = new ModelAndView("home");
-	mav.addObject("configuration", configurationService.getConfiguration());
+	mav.addObject("configuration", crawlConfigurationService.getCrawlConfiguration());
 	mav.addObject("crawlReport", crawlService.getReportCurrentCrawl());
 	mav.addObject("refactReport", null);
 
@@ -111,11 +165,11 @@ public class MainController {
     public ModelAndView generate(@ModelAttribute CrawlConfiguration dto) {
 	logger.info("User ask to generate ");
 
-	String urls = configurationService.generateUrlFromDates(dto.getStartGenDate(), dto.getEndGenDate());
+	String urls = crawlConfigurationService.generateUrlFromDates(dto.getStartGenDate(), dto.getEndGenDate());
 
 	dto.setTxtSeeds(urls);
 
-	configurationService.saveConfiguration(dto);
+	crawlConfigurationService.saveConfiguration(dto);
 
 	ModelAndView mav = new ModelAndView("home");
 	mav.addObject("configuration", dto);

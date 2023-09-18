@@ -31,7 +31,7 @@ public class ApiController {
 	Frame f = new Frame();
 	f.setActif(true);
 	f.setDate(new Date());
-	f.setDisponibility(true);
+	f.setAvailable(true);
 	f.setUrl(URL_ASH);
 	f.setFormat(ff);
 	f.setWoodType(WoodType.FRENE);
@@ -45,7 +45,7 @@ public class ApiController {
 	f = new Frame();
 	f.setActif(true);
 	f.setDate(new Date());
-	f.setDisponibility(true);
+	f.setAvailable(true);
 	f.setUrl(URL_ASH);
 	f.setFormat(ff);
 	f.setWoodType(WoodType.FRENE);
@@ -60,7 +60,7 @@ public class ApiController {
 	f = new Frame();
 	f.setActif(true);
 	f.setDate(new Date());
-	f.setDisponibility(true);
+	f.setAvailable(true);
 	f.setUrl(URL_ASH);
 	f.setFormat(ff);
 	f.setWoodType(WoodType.FRENE);
@@ -75,7 +75,7 @@ public class ApiController {
 	f = new Frame();
 	f.setActif(true);
 	f.setDate(new Date());
-	f.setDisponibility(true);
+	f.setAvailable(true);
 	f.setUrl(URL_ASH);
 	f.setFormat(ff);
 	f.setWoodType(WoodType.FRENE);
@@ -90,7 +90,7 @@ public class ApiController {
 	f = new Frame();
 	f.setActif(true);
 	f.setDate(new Date());
-	f.setDisponibility(true);
+	f.setAvailable(true);
 	f.setUrl(URL_ASH);
 	f.setFormat(ff);
 	f.setWoodType(WoodType.FRENE);
@@ -105,7 +105,7 @@ public class ApiController {
 	f = new Frame();
 	f.setActif(true);
 	f.setDate(new Date());
-	f.setDisponibility(true);
+	f.setAvailable(true);
 	f.setUrl(URL_ASH);
 	f.setFormat(ff);
 	f.setWoodType(WoodType.FRENE);
@@ -120,7 +120,7 @@ public class ApiController {
 	f = new Frame();
 	f.setActif(true);
 	f.setDate(new Date());
-	f.setDisponibility(true);
+	f.setAvailable(true);
 	f.setUrl(URL_ASH);
 	f.setFormat(ff);
 	f.setWoodType(WoodType.FRENE);
@@ -136,7 +136,7 @@ public class ApiController {
 	f = new Frame();
 	f.setActif(true);
 	f.setDate(new Date());
-	f.setDisponibility(true);
+	f.setAvailable(true);
 	f.setUrl(URL_HET);
 	f.setFormat(ff);
 	f.setWoodType(WoodType.HETRE);
@@ -151,7 +151,7 @@ public class ApiController {
 	f = new Frame();
 	f.setActif(true);
 	f.setDate(new Date());
-	f.setDisponibility(true);
+	f.setAvailable(true);
 	f.setUrl(URL_HET);
 	f.setFormat(ff);
 	f.setWoodType(WoodType.HETRE);
@@ -166,7 +166,7 @@ public class ApiController {
 	f = new Frame();
 	f.setActif(true);
 	f.setDate(new Date());
-	f.setDisponibility(true);
+	f.setAvailable(true);
 	f.setUrl(URL_HET);
 	f.setFormat(ff);
 	f.setWoodType(WoodType.HETRE);
@@ -181,7 +181,7 @@ public class ApiController {
 	f = new Frame();
 	f.setActif(true);
 	f.setDate(new Date());
-	f.setDisponibility(true);
+	f.setAvailable(true);
 	f.setUrl(URL_HET);
 	f.setFormat(ff);
 	f.setWoodType(WoodType.HETRE);
@@ -196,7 +196,7 @@ public class ApiController {
 	f = new Frame();
 	f.setActif(true);
 	f.setDate(new Date());
-	f.setDisponibility(true);
+	f.setAvailable(true);
 	f.setUrl(URL_HET);
 	f.setFormat(ff);
 	f.setWoodType(WoodType.HETRE);
@@ -211,7 +211,7 @@ public class ApiController {
 	f = new Frame();
 	f.setActif(true);
 	f.setDate(new Date());
-	f.setDisponibility(true);
+	f.setAvailable(true);
 	f.setUrl(URL_HET);
 	f.setFormat(ff);
 	f.setWoodType(WoodType.HETRE);

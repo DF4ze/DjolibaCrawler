@@ -1,0 +1,42 @@
+
+
+<!-- <div class="row table-responsive "> table-responsive -->
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Skin Name \ Frame size</th>
+      <th scope="col" th:each="size: ${frameSizes}" th:text="|${size}|"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="skin: ${skinList}">
+      <td scope="row" >
+      	<div th:text="|${skin.name}|"></div>
+      	<div th:text="|${skin.animal}|"></div>
+      	<div th:text="|${skin.size.height} x ${skin.size.width}|"></div>
+      	<div th:text="|${skin.price}€|"></div>
+      </td>
+      <td th:each="size: ${frameSizes}">
+      	<div th:if="${mainTable.get(skin.sku+size) != null}">
+      		<div th:text="|${#lists.size(mainTable.get(skin.sku+size))} Drums|">
+      		</div>
+      		<div th:each="drum: ${mainTable.get(skin.sku+size)}">
+      			<span th:text="|AV : ${drum.available}|"></span><br/>
+      			<span th:text="|NB : ${drum.nbFrameInSkin}|"></span><br/>
+      			<span th:text="|WS : ${drum.priceWorkShop}€|"></span><br/>
+      			<span th:text="|BD : ${drum.priceBuild}€|"></span><br/>
+      		</div>
+<!--       		<span th:text="|${mainTable.get(skin.sku+size)}|"></span> -->
+			
+      	</div>
+      	<div th:unless="${mainTable.get(skin.sku+size) != null}">
+      		<span ></span>
+      	</div>
+      	
+      
+<!--       	<span th:text="|${#lists.size(mainTable.get(skin.sku+size))}|"></span> -->
+      </td>
+    </tr>
+    
+</table>
+<!-- </div> -->
