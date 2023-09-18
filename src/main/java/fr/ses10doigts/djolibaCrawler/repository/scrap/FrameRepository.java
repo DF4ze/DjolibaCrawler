@@ -7,4 +7,6 @@ import fr.ses10doigts.djolibaCrawler.model.scrap.entity.Frame;
 
 public interface FrameRepository extends JpaRepository<Frame, Long> {
 
+    Frame findBySku(String frameSKU);
+
 }

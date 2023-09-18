@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import fr.ses10doigts.djolibaCrawler.CustomProperties;
+import fr.ses10doigts.djolibaCrawler.CustomCrawlProperties;
 import fr.ses10doigts.djolibaCrawler.model.crawl.Report;
 import fr.ses10doigts.djolibaCrawler.model.crawl.enumerate.FinalState;
 import fr.ses10doigts.djolibaCrawler.model.crawl.enumerate.RunningState;
@@ -21,20 +21,20 @@ import fr.ses10doigts.djolibaCrawler.service.scrap.tool.Chrono;
 @Service
 public class CrawlService {
     @Autowired
-    private WebCrawlingProxy	webService;
+    private WebCrawlingProxy	  webService;
 
     @Autowired
-    private LineReader		reader;
+    private LineReader		  reader;
 
     @Autowired
-    private CustomProperties	props;
+    private CustomCrawlProperties props;
 
     @Autowired
-    private ProcessorChain	pc;
+    private ProcessorChain	  pc;
 
-    private static Thread	treatment = null;
+    private static Thread	  treatment = null;
 
-    private static final Logger	logger = LoggerFactory.getLogger(CrawlService.class);
+    private static final Logger	  logger    = LoggerFactory.getLogger(CrawlService.class);
 
     public String getPage(String url) {
 	return webService.getRawPage(url);

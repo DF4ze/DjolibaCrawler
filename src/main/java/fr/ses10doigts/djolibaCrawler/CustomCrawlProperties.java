@@ -7,7 +7,7 @@ import fr.ses10doigts.djolibaCrawler.model.crawl.enumerate.Agressivity;
 
 @Configuration
 @ConfigurationProperties(prefix = "fr.ses10doigts.crawler")
-public class CustomProperties {
+public class CustomCrawlProperties {
 
     // @Value("#{'${fr.ses10doigts.webapp.urls}'.split(',')}")
     // private List<String> urls;

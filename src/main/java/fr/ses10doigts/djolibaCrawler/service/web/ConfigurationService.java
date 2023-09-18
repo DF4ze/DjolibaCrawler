@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.ses10doigts.djolibaCrawler.CustomProperties;
-import fr.ses10doigts.djolibaCrawler.model.web.Configuration;
+import fr.ses10doigts.djolibaCrawler.CustomCrawlProperties;
+import fr.ses10doigts.djolibaCrawler.model.web.CrawlConfiguration;
 import fr.ses10doigts.djolibaCrawler.service.crawl.tool.LineReader;
 import fr.ses10doigts.djolibaCrawler.service.crawl.tool.LineWriter;
 
@@ -24,15 +24,15 @@ public class ConfigurationService {
     @Autowired
     private LineWriter	     writer;
     @Autowired
-    private CustomProperties props;
+    private CustomCrawlProperties props;
 
     private static final Logger	logger = LoggerFactory.getLogger(ConfigurationService.class);
     private static final DateFormat urlDateFormat    = new SimpleDateFormat("yyyy-MM-dd");
     private static final DateFormat writenDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 
-    public Configuration getConfiguration() {
-	Configuration conf = new Configuration();
+    public CrawlConfiguration getConfiguration() {
+	CrawlConfiguration conf = new CrawlConfiguration();
 
 	conf.setAgressivity(props.getAgressivity());
 	conf.setMaxHop(props.getMaxHop());
@@ -65,7 +65,7 @@ public class ConfigurationService {
 	return conf;
     }
 
-    public void saveConfiguration(Configuration conf) {
+    public void saveConfiguration(CrawlConfiguration conf) {
 	try {
 
 

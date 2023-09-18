@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import fr.ses10doigts.djolibaCrawler.model.crawl.Report;
 import fr.ses10doigts.djolibaCrawler.model.crawl.enumerate.FinalState;
 import fr.ses10doigts.djolibaCrawler.model.crawl.enumerate.RunningState;
-import fr.ses10doigts.djolibaCrawler.model.web.Configuration;
+import fr.ses10doigts.djolibaCrawler.model.web.CrawlConfiguration;
 import fr.ses10doigts.djolibaCrawler.service.crawl.CrawlService;
 
 @Component
@@ -20,7 +20,7 @@ public class LaunchService {
     private CrawlService	 crawl;
 
     public Report manageLaunch() {
-	Configuration configuration = conf.getConfiguration();
+	CrawlConfiguration configuration = conf.getConfiguration();
 
 	Report cr = new Report();
 	try {

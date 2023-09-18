@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import fr.ses10doigts.djolibaCrawler.model.crawl.Report;
-import fr.ses10doigts.djolibaCrawler.model.web.Configuration;
+import fr.ses10doigts.djolibaCrawler.model.web.CrawlConfiguration;
 import fr.ses10doigts.djolibaCrawler.service.crawl.CrawlService;
 import fr.ses10doigts.djolibaCrawler.service.web.ConfigurationService;
 import fr.ses10doigts.djolibaCrawler.service.web.LaunchService;
@@ -57,7 +57,7 @@ public class MainController {
     }
 
     @PostMapping(value = "/", params = "action=save")
-    public ModelAndView saveConfig(@ModelAttribute Configuration dto) {
+    public ModelAndView saveConfig(@ModelAttribute CrawlConfiguration dto) {
 	logger.info("User ask to save config : " + dto);
 
 	configurationService.saveConfiguration(dto);
@@ -65,7 +65,7 @@ public class MainController {
     }
 
     @PostMapping(value = "/", params = "action=launch")
-    public ModelAndView launchCrawl(@ModelAttribute Configuration dto) {
+    public ModelAndView launchCrawl(@ModelAttribute CrawlConfiguration dto) {
 	logger.info("User ask to launch with config : " + dto);
 
 	configurationService.saveConfiguration(dto);
@@ -108,7 +108,7 @@ public class MainController {
     }
 
     @PostMapping(value = "/", params = "action=generate")
-    public ModelAndView generate(@ModelAttribute Configuration dto) {
+    public ModelAndView generate(@ModelAttribute CrawlConfiguration dto) {
 	logger.info("User ask to generate ");
 
 	String urls = configurationService.generateUrlFromDates(dto.getStartGenDate(), dto.getEndGenDate());

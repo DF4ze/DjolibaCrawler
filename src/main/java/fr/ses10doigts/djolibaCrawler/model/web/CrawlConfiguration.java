@@ -2,7 +2,7 @@ package fr.ses10doigts.djolibaCrawler.model.web;
 
 import fr.ses10doigts.djolibaCrawler.model.crawl.enumerate.Agressivity;
 
-public class Configuration {
+public class CrawlConfiguration {
 
     private String	txtSeeds;
     private String	authorized;

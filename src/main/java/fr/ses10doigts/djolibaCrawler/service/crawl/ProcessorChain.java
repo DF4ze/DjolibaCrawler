@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 
-import fr.ses10doigts.djolibaCrawler.CustomProperties;
+import fr.ses10doigts.djolibaCrawler.CustomCrawlProperties;
 import fr.ses10doigts.djolibaCrawler.model.crawl.Page;
 import fr.ses10doigts.djolibaCrawler.model.crawl.enumerate.Agressivity;
 import fr.ses10doigts.djolibaCrawler.repository.web.WebCrawlingProxy;
@@ -31,7 +31,7 @@ public class ProcessorChain implements Runnable {
     @Autowired
     private HtmlVisitor		htmlVisitor;
     @Autowired
-    private CustomProperties	props;
+    private CustomCrawlProperties	props;
 
 
     private Set<String>		seeds;
