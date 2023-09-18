@@ -31,11 +31,17 @@ public class MainController {
 
     @GetMapping("/")
     public String home(Model model) {
+
+	return "home";
+    }
+
+    @GetMapping("/crawl")
+    public String crawl(Model model) {
 	model.addAttribute("configuration", configurationService.getConfiguration());
 	model.addAttribute("crawlReport", crawlService.getReportCurrentCrawl());
 	model.addAttribute("refactReport", null);
 
-	return "home";
+	return "crawl";
     }
 
     @GetMapping("/generate")

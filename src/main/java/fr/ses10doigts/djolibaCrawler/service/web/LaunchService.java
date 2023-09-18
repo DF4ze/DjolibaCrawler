@@ -23,11 +23,9 @@ public class LaunchService {
 	Configuration configuration = conf.getConfiguration();
 
 	Report cr = new Report();
-	Thread t = null;
 	try {
 	    if (configuration.isLaunchCrawl()) {
 		cr = crawl.launchCrawl();
-		t = crawl.getTreatment();
 	    }
 
 

@@ -156,7 +156,6 @@ public class DjolibaParser implements HtmlParser {
 	    logger.debug("size : " + size);
 
 	}
-	int i = 0;
 
 
 	if (skin.getName() != null && !skin.getName().isBlank()) {
