@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import fr.ses10doigts.djolibaCrawler.CustomBusinessProperties;
-import fr.ses10doigts.djolibaCrawler.model.business.Drum;
+import fr.ses10doigts.djolibaCrawler.model.business.entity.Drum;
 import fr.ses10doigts.djolibaCrawler.model.scrap.entity.Frame;
 import fr.ses10doigts.djolibaCrawler.model.scrap.entity.Skin;
 import fr.ses10doigts.djolibaCrawler.model.scrap.entity.enumarate.SkinFormat;
@@ -29,7 +29,7 @@ public class BusinessService {
     @Autowired
     private SkinRepository	     skinRepository;
     @Autowired
-    private CustomBusinessProperties props;
+    private BusinessConfigurationService businessConfigurationService;
 
 
 
@@ -111,21 +111,28 @@ public class BusinessService {
 
     private Long skinFitFrame(Skin skin, Frame frame) {
 	Integer sizeFrame = frame.getSizeCm();
+	CustomBusinessProperties props = businessConfigurationService.getBusinessConfiguration();
 	Integer sizeNeeded = sizeFrame + props.getSkinBorder(); // adding border to the frame size
 
 	Double ratioH = Math.floor(skin.getSize().getHeight() / sizeNeeded);
 	Double ratioW = Math.floor(skin.getSize().getWidth() / sizeNeeded);
 
-
 	long ratioHR = Math.round(ratioH);
 	long ratioWR = Math.round(ratioW);
 
-	return ratioHR * ratioWR;
+	Long ratio = ratioHR * ratioWR;
+	if (props.getNbMaxFrame() != null && props.getNbMaxFrame() > 0) {
+	    ratio = props.getNbMaxFrame().longValue();
+	}
+
+	return ratio;
 
     }
 
 
     private Drum calculateAllPrices( Drum drum ) {
+	CustomBusinessProperties props = businessConfigurationService.getBusinessConfiguration();
+
 	Long inSkin = drum.getNbFrameInSkin();
 	if (inSkin == null || inSkin < 1) {
 	    inSkin = 1l;

@@ -1,4 +1,4 @@
-package fr.ses10doigts.djolibaCrawler.model.web;
+package fr.ses10doigts.djolibaCrawler.model.crawl;
 
 import fr.ses10doigts.djolibaCrawler.model.crawl.enumerate.Agressivity;
 

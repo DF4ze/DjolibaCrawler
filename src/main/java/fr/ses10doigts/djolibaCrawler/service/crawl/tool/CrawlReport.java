@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import fr.ses10doigts.djolibaCrawler.model.crawl.Page;
-import fr.ses10doigts.djolibaCrawler.model.crawl.PageReport;
+import fr.ses10doigts.djolibaCrawler.model.crawl.entity.Page;
+import fr.ses10doigts.djolibaCrawler.model.crawl.entity.PageReport;
 import fr.ses10doigts.djolibaCrawler.model.crawl.enumerate.ChainState;
 import fr.ses10doigts.djolibaCrawler.model.crawl.enumerate.FinalState;
 import fr.ses10doigts.djolibaCrawler.model.crawl.enumerate.RunningState;

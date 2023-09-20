@@ -1,9 +1,9 @@
-package fr.ses10doigts.djolibaCrawler.model.web;
+package fr.ses10doigts.djolibaCrawler.model.business.entity;
 
 import lombok.Data;
 
 @Data
-public class MainTableFiltersDTO {
+public class MainTableFiltersDto {
 
     private String   animal;
     private Integer  frameSize;

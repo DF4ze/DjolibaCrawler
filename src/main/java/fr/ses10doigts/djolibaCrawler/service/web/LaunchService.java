@@ -5,10 +5,10 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.ses10doigts.djolibaCrawler.model.crawl.Report;
+import fr.ses10doigts.djolibaCrawler.model.crawl.CrawlConfiguration;
+import fr.ses10doigts.djolibaCrawler.model.crawl.entity.Report;
 import fr.ses10doigts.djolibaCrawler.model.crawl.enumerate.FinalState;
 import fr.ses10doigts.djolibaCrawler.model.crawl.enumerate.RunningState;
-import fr.ses10doigts.djolibaCrawler.model.web.CrawlConfiguration;
 import fr.ses10doigts.djolibaCrawler.service.crawl.CrawlService;
 
 @Component

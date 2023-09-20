@@ -1,4 +1,4 @@
-package fr.ses10doigts.djolibaCrawler.model.business;
+package fr.ses10doigts.djolibaCrawler.model.business.entity;
 
 import fr.ses10doigts.djolibaCrawler.model.scrap.entity.Frame;
 import fr.ses10doigts.djolibaCrawler.model.scrap.entity.Skin;

@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import fr.ses10doigts.djolibaCrawler.CustomCrawlProperties;
-import fr.ses10doigts.djolibaCrawler.model.crawl.Report;
+import fr.ses10doigts.djolibaCrawler.model.crawl.entity.Report;
 import fr.ses10doigts.djolibaCrawler.model.crawl.enumerate.FinalState;
 import fr.ses10doigts.djolibaCrawler.model.crawl.enumerate.RunningState;
 import fr.ses10doigts.djolibaCrawler.repository.web.WebCrawlingProxy;

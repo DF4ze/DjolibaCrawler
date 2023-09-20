@@ -1,4 +1,4 @@
-package fr.ses10doigts.djolibaCrawler.model.crawl;
+package fr.ses10doigts.djolibaCrawler.model.crawl.entity;
 
 import java.util.HashSet;
 import java.util.Objects;

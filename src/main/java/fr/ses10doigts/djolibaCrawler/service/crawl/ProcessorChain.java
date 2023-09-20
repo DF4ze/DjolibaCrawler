@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 
 import fr.ses10doigts.djolibaCrawler.CustomCrawlProperties;
-import fr.ses10doigts.djolibaCrawler.model.crawl.Page;
+import fr.ses10doigts.djolibaCrawler.model.crawl.entity.Page;
 import fr.ses10doigts.djolibaCrawler.model.crawl.enumerate.Agressivity;
 import fr.ses10doigts.djolibaCrawler.repository.web.WebCrawlingProxy;
 import fr.ses10doigts.djolibaCrawler.service.crawl.tool.CrawlReport;

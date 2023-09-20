@@ -12,14 +12,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import fr.ses10doigts.djolibaCrawler.model.business.Drum;
-import fr.ses10doigts.djolibaCrawler.model.crawl.Report;
+import fr.ses10doigts.djolibaCrawler.model.business.entity.Drum;
+import fr.ses10doigts.djolibaCrawler.model.business.entity.MainTableFiltersDto;
+import fr.ses10doigts.djolibaCrawler.model.crawl.CrawlConfiguration;
+import fr.ses10doigts.djolibaCrawler.model.crawl.entity.Report;
 import fr.ses10doigts.djolibaCrawler.model.scrap.entity.Skin;
 import fr.ses10doigts.djolibaCrawler.model.scrap.entity.enumarate.WoodType;
-import fr.ses10doigts.djolibaCrawler.model.web.CrawlConfiguration;
-import fr.ses10doigts.djolibaCrawler.model.web.MainTableFiltersDTO;
 import fr.ses10doigts.djolibaCrawler.service.business.BusinessConfigurationService;
 import fr.ses10doigts.djolibaCrawler.service.business.BusinessService;
 import fr.ses10doigts.djolibaCrawler.service.crawl.CrawlService;
@@ -57,21 +58,37 @@ public class MainController {
 	return "home";
     }
 
-    @GetMapping("/mainTable")
-    public String mainTable(Model model) {
-	List<Skin> allActivSkins = businessService.getAllActivSkins(null, true);
-	List<Integer> distinctFrameSize = businessService.getDistinctFrameSize(null, null, true);
-	Map<String, List<Drum>> result = businessService.buildDrumsFromFilters(null, null, null, true);
+    @PostMapping("/")
+    public String homeWithFilters(
+	    @RequestParam("param1") String param1, @RequestParam("param2") int param2, Model model
+	    ) {
 
-	model.addAttribute("skinList", allActivSkins);
-	model.addAttribute("frameSizes", distinctFrameSize);
-	model.addAttribute("mainTable", result);
+	model.addAttribute("businessConf", businessConfigurationService.getBusinessConfiguration());
+	model.addAttribute("skinList", businessService.getAllActivSkins(null, null));
+	model.addAttribute("frameList", businessService.getAllActivFrames(null, null, null));
 
-	return "mainTable";
+	model.addAttribute("animals", businessService.getDistinctAnimal(null, null));
+	model.addAttribute("frameSizes", businessService.getDistinctFrameSize(null, null, null));
+	model.addAttribute("frameWoods", businessService.getDistinctFrameWood());
+
+	return "home";
     }
 
+    //    @GetMapping("/mainTable")
+    //    public String mainTable(Model model) {
+    //	List<Skin> allActivSkins = businessService.getAllActivSkins(null, true);
+    //	List<Integer> distinctFrameSize = businessService.getDistinctFrameSize(null, null, true);
+    //	Map<String, List<Drum>> result = businessService.buildDrumsFromFilters(null, null, null, true);
+    //
+    //	model.addAttribute("skinList", allActivSkins);
+    //	model.addAttribute("frameSizes", distinctFrameSize);
+    //	model.addAttribute("mainTable", result);
+    //
+    //	return "mainTable";
+    //    }
+
     @PostMapping("/changeTableFilters")
-    public ModelAndView changeFiltersMainTable(@ModelAttribute MainTableFiltersDTO dto) {
+    public ModelAndView changeFiltersMainTable(@ModelAttribute MainTableFiltersDto dto) {
 	logger.debug("User change filters: " + dto);
 
 	if (dto.getAnimal() != null && dto.getAnimal().equals("aucun")) {

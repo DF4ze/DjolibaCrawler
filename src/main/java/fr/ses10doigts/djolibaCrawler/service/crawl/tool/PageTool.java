@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import fr.ses10doigts.djolibaCrawler.model.crawl.Page;
+import fr.ses10doigts.djolibaCrawler.model.crawl.entity.Page;
 
 @Service
 public class PageTool {

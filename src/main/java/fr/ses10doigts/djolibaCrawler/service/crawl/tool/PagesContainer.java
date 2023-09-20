@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
 
-import fr.ses10doigts.djolibaCrawler.model.crawl.Page;
+import fr.ses10doigts.djolibaCrawler.model.crawl.entity.Page;
 
 public class PagesContainer {
 

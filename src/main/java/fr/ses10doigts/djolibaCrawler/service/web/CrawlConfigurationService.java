@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import fr.ses10doigts.djolibaCrawler.CustomCrawlProperties;
-import fr.ses10doigts.djolibaCrawler.model.web.CrawlConfiguration;
+import fr.ses10doigts.djolibaCrawler.model.crawl.CrawlConfiguration;
 import fr.ses10doigts.djolibaCrawler.service.crawl.tool.LineReader;
 import fr.ses10doigts.djolibaCrawler.service.crawl.tool.LineWriter;
 

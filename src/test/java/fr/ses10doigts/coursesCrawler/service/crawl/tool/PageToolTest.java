@@ -7,7 +7,7 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-import fr.ses10doigts.djolibaCrawler.model.crawl.Page;
+import fr.ses10doigts.djolibaCrawler.model.crawl.entity.Page;
 import fr.ses10doigts.djolibaCrawler.service.crawl.tool.PageTool;
 import jakarta.annotation.Generated;
 
