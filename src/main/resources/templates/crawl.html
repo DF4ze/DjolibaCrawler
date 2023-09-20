@@ -5,7 +5,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Geny's Blower</title>
+	<title>Drumastic - Crawl</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -28,8 +28,8 @@
 <!--   </button> -->
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      <li class="nav-item ">
+        <a class="nav-link" href="/">Home</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/skins">Skins </a>
@@ -40,8 +40,8 @@
       <li class="nav-item">
         <a class="nav-link" href="/rules">Rules </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/crawl">Crawl </a>
+      <li class="nav-item active">
+        <a class="nav-link" href="/crawl"><b>Crawl</b></a>
       </li>
 <!--       <li class="nav-item"> -->
 <!--         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->
@@ -52,7 +52,7 @@
 
 
 
-<form method="post" modelAttribute="configuration" th:action="@{/}" th:object="${configuration}"><br/>
+<form method="post" modelAttribute="configuration" th:action="@{/crawl}" th:object="${configuration}"><br/>
 <div class="m-4 mt-0">
      <div class="row mb-3">
         <label class="col-sm-1 col-form-label" for="maxHop">Max HOP</label>

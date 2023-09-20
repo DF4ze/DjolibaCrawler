@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import fr.ses10doigts.djolibaCrawler.model.business.Drum;
 import fr.ses10doigts.djolibaCrawler.model.crawl.Report;
 import fr.ses10doigts.djolibaCrawler.model.scrap.entity.Skin;
+import fr.ses10doigts.djolibaCrawler.model.scrap.entity.enumarate.WoodType;
 import fr.ses10doigts.djolibaCrawler.model.web.CrawlConfiguration;
 import fr.ses10doigts.djolibaCrawler.model.web.MainTableFiltersDTO;
 import fr.ses10doigts.djolibaCrawler.service.business.BusinessConfigurationService;
@@ -58,9 +59,9 @@ public class MainController {
 
     @GetMapping("/mainTable")
     public String mainTable(Model model) {
-	List<Skin> allActivSkins = businessService.getAllActivSkins(null, null);
-	List<Integer> distinctFrameSize = businessService.getDistinctFrameSize(null, null, null);
-	Map<String, List<Drum>> result = businessService.buildDrumsFromFilters(null, null, null, null);
+	List<Skin> allActivSkins = businessService.getAllActivSkins(null, true);
+	List<Integer> distinctFrameSize = businessService.getDistinctFrameSize(null, null, true);
+	Map<String, List<Drum>> result = businessService.buildDrumsFromFilters(null, null, null, true);
 
 	model.addAttribute("skinList", allActivSkins);
 	model.addAttribute("frameSizes", distinctFrameSize);
@@ -73,12 +74,28 @@ public class MainController {
     public ModelAndView changeFiltersMainTable(@ModelAttribute MainTableFiltersDTO dto) {
 	logger.debug("User change filters: " + dto);
 
-	List<Skin> allActivSkins = businessService.getAllActivSkins(dto.getAnimal(), dto.getAvalaible());
-	List<Integer> distinctFrameSize = businessService.getDistinctFrameSize(dto.getFrameSize(), dto.getFrameWood(),
-		dto.getAvalaible());
+	if (dto.getAnimal() != null && dto.getAnimal().equals("aucun")) {
+	    dto.setAnimal(null);
+	}
+	if (dto.getAvailable() != null && dto.getAvailable() == false) {
+	    dto.setAvailable(null);
+	}
+	WoodType wt = null;
+	if (!dto.getFrameWood().equals("aucun")) {
+	    wt = WoodType.valueOf(dto.getFrameWood());
+	}
+	if (dto.getFrameSize() == 0) {
+	    dto.setFrameSize(null);
+	}
+
+
+	List<Skin> allActivSkins = businessService.getAllActivSkins(dto.getAnimal(), dto.getAvailable());
+
+	List<Integer> distinctFrameSize = businessService.getDistinctFrameSize(dto.getFrameSize(), wt,
+		dto.getAvailable());
 
 	Map<String, List<Drum>> result = businessService.buildDrumsFromFilters(dto.getAnimal(), dto.getFrameSize(),
-		dto.getFrameWood(), dto.getAvalaible());
+		wt, dto.getAvailable());
 
 	ModelAndView mav = new ModelAndView("mainTable");
 	mav.addObject("mainTable", new HashMap<>());
@@ -110,22 +127,22 @@ public class MainController {
 	return "redirect:/";
     }
 
-    @PostMapping(value = "/", params = "action=save")
+    @PostMapping(value = "/crawl", params = "action=save")
     public ModelAndView saveConfig(@ModelAttribute CrawlConfiguration dto) {
 	logger.info("User ask to save config : " + dto);
 
 	crawlConfigurationService.saveConfiguration(dto);
-	return new ModelAndView("redirect:/");
+	return new ModelAndView("redirect:crawl");
     }
 
-    @PostMapping(value = "/", params = "action=launch")
+    @PostMapping(value = "/crawl", params = "action=launch")
     public ModelAndView launchCrawl(@ModelAttribute CrawlConfiguration dto) {
 	logger.info("User ask to launch with config : " + dto);
 
 	crawlConfigurationService.saveConfiguration(dto);
 	Report crawlReport = launcher.manageLaunch();
 
-	ModelAndView mav = new ModelAndView("home");
+	ModelAndView mav = new ModelAndView("crawl");
 	mav.addObject("configuration", crawlConfigurationService.getCrawlConfiguration());
 	mav.addObject("crawlReport", crawlReport);
 	mav.addObject("refactReport", null);
@@ -133,13 +150,13 @@ public class MainController {
 	return mav;
     }
 
-    @PostMapping(value = "/", params = "action=stop")
+    @PostMapping(value = "/crawl", params = "action=stop")
     public ModelAndView stop() {
 	logger.info("User ask to stop ");
 
 	crawlService.stopCurrentCrawl();
 
-	ModelAndView mav = new ModelAndView("home");
+	ModelAndView mav = new ModelAndView("crawl");
 	mav.addObject("configuration", crawlConfigurationService.getCrawlConfiguration());
 	mav.addObject("crawlReport", crawlService.getReportCurrentCrawl());
 	mav.addObject("refactReport", null);
@@ -171,7 +188,7 @@ public class MainController {
 
 	crawlConfigurationService.saveConfiguration(dto);
 
-	ModelAndView mav = new ModelAndView("home");
+	ModelAndView mav = new ModelAndView("crawl");
 	mav.addObject("configuration", dto);
 	mav.addObject("crawlReport", crawlService.getReportCurrentCrawl());
 	mav.addObject("refactReport", null);

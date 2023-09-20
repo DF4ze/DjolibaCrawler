@@ -42,23 +42,28 @@ function includeHTML() {
 
 
 
-function changeTableFilters( animal, frameSize, frameWood) {
-	$.ajax({
-		type : "POST",
-		url : "changeTableFilters",
-		data : {
-			"animal" : animal,
-			"frameSize" : frameSize,
-			"frameWood" : frameWood
-		},
-		success : function(result) {
-			if (result == true) {
-				
-			} 
-		},
-		error : function(e) {
-			$("#getResultDiv").html("<strong>Error</strong>");
-			console.log("ERROR: ", e);
-		}
+// Attach a submit handler to the form
+//$( "#searchForm" ).change(function( event ) {
+function submitFilters() {
+ 
+
+  // Get some values from elements on the page:
+  var animal = $("#animal").val();
+  var frameSize = $("#frameSize").val();
+  var frameWood = $("#frameWood").val();
+  var available = $("#available")[0].checked;
+  
+  // Send the data using post
+  var posting = $.post( "/changeTableFilters", 
+  	{ 
+		animal: animal,
+	  	frameSize: frameSize,
+	  	frameWood: frameWood,
+	  	available: available 
 	});
-}
+ 
+  // Put the results in a div
+  posting.done(function( data ) {
+    $( "#mainTable" ).html( data );
+  });
+};

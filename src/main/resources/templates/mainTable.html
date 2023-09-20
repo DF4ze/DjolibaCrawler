@@ -1,6 +1,6 @@
 
 
-<!-- <div class="row table-responsive "> table-responsive -->
+<!-- <div class="row table-responsive "> -->
 <table class="table table-striped">
   <thead>
     <tr>
@@ -10,23 +10,34 @@
   </thead>
   <tbody>
     <tr th:each="skin: ${skinList}">
-      <td scope="row" >
-      	<div th:text="|${skin.name}|"></div>
+      <td scope="row" class="col-2">
+      	<div ><a th:href="${skin.url}" th:text="|${skin.name}|"></a></div>
       	<div th:text="|${skin.animal}|"></div>
-      	<div th:text="|${skin.size.height} x ${skin.size.width}|"></div>
-      	<div th:text="|${skin.price}€|"></div>
+      	<div th:if="${skin.size != null}" th:text="|${skin.size.height} x ${skin.size.width}|"></div>
+      	<div th:text="|${#numbers.formatCurrency(skin.price)}|"></div>
+      	<img th:src="|${skin.urlImg}|" width="50" height="60"/>
       </td>
       <td th:each="size: ${frameSizes}">
-      	<div th:if="${mainTable.get(skin.sku+size) != null}">
-      		<div th:text="|${#lists.size(mainTable.get(skin.sku+size))} Drums|">
+      	<div th:if="${mainTable.get(skin.sku+size) != null && #lists.size(mainTable.get(skin.sku+size)) > 0}" >
+      	
+	      	<div th:if="${mainTable.get(skin.sku+size).get(0).available == true && mainTable.get(skin.sku+size).get(0).nbFrameInSkin > 0}" class="bg-success rounded">
+	      		<i th:if="${mainTable.get(skin.sku+size).get(0).available == true}" class="bi bi-check"></i>
+	      		<i th:unless="${mainTable.get(skin.sku+size).get(0).available == true}" class="bi bi-cart-x-fill"></i>
+      			<span th:text="|${mainTable.get(skin.sku+size).get(0).nbFrameInSkin} Drum(s)|"></span>
+      		</div>	
+      		<div th:unless="${mainTable.get(skin.sku+size).get(0).available == true && mainTable.get(skin.sku+size).get(0).nbFrameInSkin > 0}" class="bg-danger rounded">
+	      		<i th:if="${mainTable.get(skin.sku+size).get(0).available == true}" class="bi bi-check"></i>
+	      		<i th:unless="${mainTable.get(skin.sku+size).get(0).available == true}" class="bi bi-cart-x-fill"></i>
+      			<span th:text="|${mainTable.get(skin.sku+size).get(0).nbFrameInSkin} Drum(s)|"></span>
       		</div>
-      		<div th:each="drum: ${mainTable.get(skin.sku+size)}">
-      			<span th:text="|AV : ${drum.available}|"></span><br/>
-      			<span th:text="|NB : ${drum.nbFrameInSkin}|"></span><br/>
-      			<span th:text="|WS : ${drum.priceWorkShop}€|"></span><br/>
-      			<span th:text="|BD : ${drum.priceBuild}€|"></span><br/>
+      		
+      		<div th:each="drum: ${mainTable.get(skin.sku+size)}" class="border rounded mt-1">
+      			<div th:text="|WT : ${drum.frame.woodType}|" class="bg-secondary"></div>
+<!--       			<span th:text="|AV : ${drum.available}|"></span><br/> -->
+<!--       			<span th:text="|NB : ${drum.nbFrameInSkin}|"></span><br/> -->
+      			<span th:text="|WS : ${#numbers.formatCurrency(drum.priceWorkShop)}|"></span><br/>
+      			<span th:text="|BD : ${#numbers.formatCurrency(drum.priceBuild)}|"></span><br/>
       		</div>
-<!--       		<span th:text="|${mainTable.get(skin.sku+size)}|"></span> -->
 			
       	</div>
       	<div th:unless="${mainTable.get(skin.sku+size) != null}">
@@ -34,9 +45,14 @@
       	</div>
       	
       
-<!--       	<span th:text="|${#lists.size(mainTable.get(skin.sku+size))}|"></span> -->
       </td>
     </tr>
     
 </table>
+
+
+
+
+
+
 <!-- </div> -->

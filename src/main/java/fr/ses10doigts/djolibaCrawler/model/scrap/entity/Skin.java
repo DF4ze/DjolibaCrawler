@@ -6,6 +6,8 @@ import fr.ses10doigts.djolibaCrawler.model.scrap.entity.enumarate.SkinFormat;
 import fr.ses10doigts.djolibaCrawler.model.scrap.entity.enumarate.SkinSize;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Data;
@@ -19,7 +21,9 @@ public class Skin extends AbstractPageEntity implements Cloneable {
 
     private String	name;
     private String	animal;
+    @Enumerated(EnumType.STRING)
     private SkinFormat	skinFormat;
+    @Enumerated(EnumType.STRING)
     private FatnessType	fatness;
     @Embedded
     private SkinSize	size;

@@ -46,7 +46,9 @@ public class BusinessService {
 	Set<String> animals = new HashSet<>();
 	// retrieve differents animals
 	for (Skin skin : skins) {
-	    animals.add(skin.getAnimal());
+	    if (skin.getAnimal() != null) {
+		animals.add(skin.getAnimal());
+	    }
 	}
 
 	// sort
@@ -60,7 +62,9 @@ public class BusinessService {
 	List<Frame> frames = getAllActivFrames(size, woodType, available);
 	Set<Integer> sizes = new HashSet<>();
 	for (Frame frame : frames) {
-	    sizes.add(frame.getSizeCm());
+	    if (frame.getSizeCm() != null) {
+		sizes.add(frame.getSizeCm());
+	    }
 	}
 
 	List<Integer> arrayList = new ArrayList<Integer>(sizes);
@@ -91,6 +95,9 @@ public class BusinessService {
 	Drum drum = new Drum();
 	drum.setSkin(skin);
 	drum.setFrame(frame);
+	if (skin.getSkinFormat() == null) {
+	    return null;
+	}
 	drum.setSkinRope(skin.getSkinFormat().equals(SkinFormat.FULLSKIN));
 
 	Long skinFitFrame = skinFitFrame(skin, frame);
@@ -161,8 +168,11 @@ public class BusinessService {
 		}
 
 		Drum drum = makeDrum(skin, frame);
-		drums.add(drum);
-		result.put(key, drums);
+		if (drum != null) {
+		    drums.add(drum);
+		    result.put(key, drums);
+		}
+
 	    }
 	}
 

@@ -37,7 +37,7 @@ public class DjolibaParser implements HtmlParser {
     @Override
     public EntitiesList parse(String url, String body){
 	this.url = url;
-	this.body = body;
+	this.body = body == null ? "" : body;
 
 	EntitiesList beansList = new EntitiesList();
 	init();
@@ -169,10 +169,10 @@ public class DjolibaParser implements HtmlParser {
 
 
 	if (skin.getSize() != null) {
-	    if (skin.getSize().getHeight() != skin.getSize().getWidth()) {
-		skin.setSkinFormat(SkinFormat.FULLSKIN);
-	    } else {
+	    if (skin.getSize().getHeight().equals(skin.getSize().getWidth())) {
 		skin.setSkinFormat(SkinFormat.CUTTEDSKIN);
+	    } else {
+		skin.setSkinFormat(SkinFormat.FULLSKIN);
 	    }
 	}
 	elements = xPathTool.getElements(doc, "/img[@id='bigpic']");
