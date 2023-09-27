@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import fr.ses10doigts.djolibaCrawler.BusinessProperties;
 import fr.ses10doigts.djolibaCrawler.CustomBusinessProperties;
+import fr.ses10doigts.djolibaCrawler.model.business.entity.RulesDto;
 import fr.ses10doigts.djolibaCrawler.service.scrap.tool.Chrono;
 
 @Service
@@ -26,6 +27,20 @@ public class BusinessConfigurationService {
 
     private static final Logger	     logger = LoggerFactory.getLogger(BusinessConfigurationService.class);
 
+    public boolean saveConfiguration(RulesDto rules) {
+	BusinessProperties bp = new BusinessProperties();
+	bp.setConfPath(getBusinessConfiguration().getConfPath());
+	bp.setMarge(rules.getMarge());
+	bp.setMoBuild(rules.getMoBuild());
+	bp.setMoFrame(rules.getMoFrame());
+	bp.setMoSkin(rules.getMoSkin());
+	bp.setNbMaxFrame(rules.getNbMaxFrame());
+	bp.setSkinBorder(rules.getSkinBorder());
+
+	configuration = bp.cloneToCustom();
+
+	return saveToFile(bp);
+    }
 
     public CustomBusinessProperties getBusinessConfiguration() {
 	CustomBusinessProperties conf = null;

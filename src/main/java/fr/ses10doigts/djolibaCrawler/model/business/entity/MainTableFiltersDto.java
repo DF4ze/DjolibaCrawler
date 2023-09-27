@@ -9,4 +9,6 @@ public class MainTableFiltersDto {
     private Integer  frameSize;
     private String  frameWood;
     private Boolean available;
+
+
 }

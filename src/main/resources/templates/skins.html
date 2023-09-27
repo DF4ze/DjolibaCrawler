@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Example with Bootstrap</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container my-5">
+
+    <h1 class="mb-4">Book List</h1>
+
+    <!-- Create Form -->
+    <form id="createForm" class="mb-4">
+        <div class="row">
+            <div class="col-md-4">
+                <input type="text" id="newTitle" class="form-control" placeholder="Title" required>
+            </div>
+            <div class="col-md-4">
+                <input type="text" id="newAuthor" class="form-control" placeholder="Author" required>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary">Add Book</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- List of Books -->
+    <ul id="bookList" class="list-group"></ul>
+
+    <!-- Update Form (Initially hidden) -->
+    <form id="updateForm" class="mb-4" style="display: none;">
+        <input type="hidden" id="bookId">
+        <div class="row">
+            <div class="col-md-4">
+                <input type="text" id="updateTitle" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+                <input type="text" id="updateAuthor" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-success">Update Book</button>
+                <button type="button" id="cancelUpdate" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- Delete Button (Initially hidden) -->
+    <button id="deleteButton" class="btn btn-danger" style="display: none;">Delete Book</button>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

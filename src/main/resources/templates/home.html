@@ -41,9 +41,9 @@
       <li class="nav-item">
         <a class="nav-link" href="/frames">Frames </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/rules">Rules </a>
-      </li>
+<!--       <li class="nav-item"> -->
+<!--         <a class="nav-link" href="/rules">Rules </a> -->
+<!--       </li> -->
       <li class="nav-item">
         <a class="nav-link" href="/crawl">Crawl </a>
       </li>
@@ -59,29 +59,29 @@
 	<div class="row">
 		<div class="col-3">
 			<label for="moFrame">Mo Frame : </label>
-			<input type="text" class="form-control" id="moFrame" placeholder="Enter text"/>
+			<input type="text" class="form-control autoSubmit" id="moFrame" th:value="${businessConf.moFrame}"/>
 		</div>
         <div class="col-3">
 		  	<label for="moSkin">Mo Skin : </label>
-		  	<input type="text" class="form-control" id="moSkin" placeholder="Enter text">
+		  	<input type="text" class="form-control autoSubmit" id="moSkin" th:value="${businessConf.moSkin}">
         </div>
         <div class="col-3">
 		  	<label for="moBuild">Mo Build : </label>
-		  	<input type="text" class="form-control" id="moBuild" placeholder="Enter text">
+		  	<input type="text" class="form-control autoSubmit" id="moBuild" th:value="${businessConf.moBuild}">
         </div>
         <div class="col-3">
 		  	<label for="marge">Marge : </label>
-		  	<input type="text" class="form-control" id="marge" placeholder="Enter text">
+		  	<input type="text" class="form-control autoSubmit" id="marge" th:value="${businessConf.marge}">
 		</div>
     </div>
 	<div class="row">
 		<div class="col-3">
-			<label for="nbfbs">Nb Max frame by skin : </label>
-			<input type="text" class="form-control" id="nbfbs" placeholder="Enter text"/>
+			<label for="nbfbs">Nb Max frame by skin : (0 = no filter) </label>
+			<input type="text" class="form-control autoSubmit" id="nbMaxFrame" th:value="${businessConf.nbMaxFrame}"/>
 		</div>
         <div class="col-3">
 		  	<label for="place">Place around skin : </label>
-		  	<input type="text" class="form-control" id="place" placeholder="Enter text">
+		  	<input type="text" class="form-control autoSubmit" id="skinBorder" th:value="${businessConf.skinBorder}">
         </div>
     </div>
 </div>
@@ -130,30 +130,6 @@
 
 
 
-
-
-<!-- Fenêtre modale -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Business Rules</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-
-          	Marge around frame : <input type="text"/><br>
-          	Max Nb Drum in skin : <input type="text"/>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-          <button type="button" class="btn btn-primary">Enregistrer</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
 
 
