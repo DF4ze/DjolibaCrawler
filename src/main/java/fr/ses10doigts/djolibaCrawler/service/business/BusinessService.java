@@ -121,7 +121,7 @@ public class BusinessService {
 	long ratioWR = Math.round(ratioW);
 
 	Long ratio = ratioHR * ratioWR;
-	if (props.getNbMaxFrame() != null && props.getNbMaxFrame() > 0) {
+	if (props.getNbMaxFrame() != null && props.getNbMaxFrame() > 0 && props.getNbMaxFrame() < ratio) {
 	    ratio = props.getNbMaxFrame().longValue();
 	}
 
